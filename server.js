@@ -4,7 +4,7 @@ const express = require("express");
 const mysql = require("mysql");
 const app = express();
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8089;
 
 const dbConfig = process.env.NODE_ENV === "production" ? config.heroku : config.local;
 
@@ -27,8 +27,7 @@ connection.connect((err) => {
 
 // =============================================================================
 
-// mysql.connection(dbConfig.local)
-console.log(dbConfig.local);
+
 
 app.get("/", (req, res) => {
   connection.query("SELECT * FROM snippets", (err, data) => {
@@ -55,6 +54,14 @@ app.post("/", (req, res) => {
     }
   );
   res.redirect("/");
+});
+
+app.post("/api/:id", function(req, res){
+  connection.query("SELECT * FROM snippets WHERE id=" + req.params.id, function(err, data) {
+    if (err) throw err;
+    // Log all results of the SELECT statement
+    res.json(data);
+  });
 });
 
 // PORT listener
