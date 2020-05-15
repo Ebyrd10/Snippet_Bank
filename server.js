@@ -27,6 +27,11 @@ connection.connect((err) => {
 
 // =============================================================================
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 8c8931d4011fe24f2a45c3ab5cd65c3751af2e60
 app.get("/", (req, res) => {
   connection.query("SELECT * FROM snippets", (err, data) => {
     if (err) {
