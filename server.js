@@ -39,29 +39,23 @@ app.get("/", (req, res) => {
   });
 });
 
-// app.post("/", (req, res) => {
-//   connection.query(
-//     "INSERT INTO snippets SET ?",
-//     {
-//       snippetTitle: req.body.newTitle
-//     },
-//     {
-//       language: req.body.newLanguage
-//     },
-//     {
-//       description: req.body.newDescription
-//     },
-//     {
-//       snippetBody: req.body.newSnippetBody
-//     },
-//     (err, res) =>{
-//       if (err){
-//         return res.status(500).end();
-//       }
-//     }
-//   );
-//   res.redirect("/");
-// });
+app.post("/", (req, res) => {
+  connection.query(
+    "INSERT INTO snippets SET ?",
+    {
+      snippetTitle: req.body.newTitle,
+      language: req.body.newLanguage,
+      description: req.body.newDescription,
+      snippetBody: req.body.newSnippetBody
+    },
+    (err, res) =>{
+      if (err){
+        return res.status(500).end();
+      }
+    }
+  );
+  res.redirect("/");
+});
 
 // PORT listener
 app.listen(PORT, () => {
