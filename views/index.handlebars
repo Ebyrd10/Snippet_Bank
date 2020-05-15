@@ -1,5 +1,5 @@
 {{#each snippets}}
-<p>{{snippetBody}}</p>
+<pre><code>{{snippetBody}}</code></pre>
 {{/each}}
 
 <div class="container">
@@ -26,7 +26,7 @@
           <textarea type="text" class="form-control" name="newDescription" id="newDescription" value=""></textarea>
         
           <label>snippetBody</label>
-          <textarea type="number" class="form-control" name="newSnippetBody" id="newSnippetBody" value="" ></textarea>
+          <textarea type="text" class="form-control" name="newSnippetBody" id="newSnippetBody" value="" ></textarea>
         
           <button type="submit" id="submitSnippet" class="btn btn-primary">Save</button>
 
