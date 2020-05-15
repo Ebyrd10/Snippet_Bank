@@ -38,7 +38,7 @@
 
         <button type="submit" id="submitSnippet" class="btn btn-primary">Save</button>
       </form>
-      
+
       <h2 id="bodyTitle"></h2>
       <pre><code id="bodySnippetBody"></code></pre>
       <h4 id="bodyDescription"></h4>
@@ -60,17 +60,21 @@
     $("#newSnippetArea").show();
   });
 
-  $("li").on("click", function(event){
+  $("li").on("click", function (event) {
     $("#newSnippetArea").hide();
     const id = $(this).val();
-        $.ajax({
-            url: "api/" + id,
-            method: "POST"
-            //Send user back to homepage for refresh
-        }).then(function(data){
-          $("#bodyTitle").text(data[0].snippetTitle);
-          $("#bodySnippetBody").text(data[0].snippetBody);
-        });
+    $.ajax({
+      url: "api/" + id,
+      method: "POST"
+      //Send user back to homepage for refresh
+    }).then(function (data) {
+
+      $("#bodyTitle").text(data[0].snippetTitle);
+      $("#bodySnippetBody").text(data[0].snippetBody);
+      $('pre > code').each(function () {
+        hljs.highlightBlock(this);
+      });
+    });
 
   });
 
