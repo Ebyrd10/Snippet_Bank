@@ -1,0 +1,8 @@
+{
+    "database":"burgers_db",
+    "pw":"",
+    "user":"root",
+    "host":"localhost",
+    "port": 3306,
+    "file": "db/schema.sql"
+}
