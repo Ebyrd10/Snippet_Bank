@@ -1,5 +1,5 @@
 {
-    "database":"burgers_db",
+    "database":"Snippetsdb",
     "pw":"",
     "user":"root",
     "host":"localhost",
