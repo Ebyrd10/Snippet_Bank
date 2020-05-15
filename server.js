@@ -6,7 +6,7 @@ const app = express();
 
 const PORT = process.env.PORT || 8080;
 
-const dbConfig = process.env.NODE_ENV === "production" ? config.heroku : config.db;
+const dbConfig = process.env.NODE_ENV === "production" ? config.heroku : config.local;
 
 const connection = mysql.createConnection(dbConfig);
 
@@ -30,3 +30,8 @@ connection.connect((err) => {
 // mysql.connection(dbConfig.local)
 console.log(dbConfig.local);
 
+
+// PORT listener
+app.listen(PORT, () => {
+  console.log("Server listening on: http://localhost:" + PORT);
+});
