@@ -27,9 +27,6 @@ connection.connect((err) => {
 
 // =============================================================================
 
-// mysql.connection(dbConfig.local)
-console.log(dbConfig.local);
-
 app.get("/", (req, res) => {
   connection.query("SELECT * FROM snippets", (err, data) => {
     if (err) {
@@ -55,6 +52,14 @@ app.post("/", (req, res) => {
     }
   );
   res.redirect("/");
+});
+
+app.post("/api/:id", function(req, res){
+  connection.query("SELECT * FROM snippets WHERE id=" + req.params.id, function(err, data) {
+    if (err) throw err;
+    // Log all results of the SELECT statement
+    res.json(data);
+  });
 });
 
 // PORT listener

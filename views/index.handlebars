@@ -3,48 +3,75 @@
 {{/each}}
 
 <div class="container">
-  
+
   <div class="jumbotron">
-      <h1>Snippet Bank</h1>
-      <h3>[rough template]</h3>
-      <hr>
-      <button id="addSnippet" class="btn btn-danger btn-lg"><span class="fa fa-plus"></span> Add New Snippet</button>
-    </div>
+    <h1>Snippet Bank</h1>
+    <h3>[rough template]</h3>
+    <hr>
+    <button id="addSnippet" class="btn btn-danger btn-lg"><span class="fa fa-plus"></span> Add New Snippet</button>
+  </div>
 
-    <!-- This is the form where a new character is added -->
-    <div id="newSnippetArea" class="row" style="display: none;">
-      <div class="col-12">
-
-        <form action="/" method="POST" name="snippets" class="form-group">
-          <label>snippetTitle</label>
-          <input type="text" class="form-control" name="newTitle" id="newTitle" value="" />
-        
-          <label>language</label>
-          <input type="text" class="form-control" name="newLanguage" id="newLanguage" value="" />
-        
-          <label>description</label>
-          <textarea type="text" class="form-control" name="newDescription" id="newDescription" value=""></textarea>
-        
-          <label>snippetBody</label>
-          <textarea type="text" class="form-control" name="newSnippetBody" id="newSnippetBody" value="" ></textarea>
-        
-          <button type="submit" id="submitSnippet" class="btn btn-primary">Save</button>
-
-        </form>
-        
+  <!-- This is the form where a new character is added -->
+  <div class="row">
+    <div class="col-3 list-container">
+      <div class="card">
+        <ul class="list-group">
+          {{#each snippets}}
+          <li value={{id}}>{{snippetTitle}}</li>
+          {{/each}}
+        </ul>
       </div>
     </div>
+    <div class="col-9">
+      <form id="newSnippetArea" style="display: none;" action="/" method="POST" name="snippets" class="form-group">
+        <label>snippetTitle</label>
+        <input type="text" class="form-control" name="newTitle" id="newTitle" value="" />
+
+        <label>language</label>
+        <input type="text" class="form-control" name="newLanguage" id="newLanguage" value="" />
+
+        <label>description</label>
+        <textarea type="text" class="form-control" name="newDescription" id="newDescription" value=""></textarea>
+
+        <label>snippetBody</label>
+        <textarea type="text" class="form-control" name="newSnippetBody" id="newSnippetBody" value=""></textarea>
+
+        <button type="submit" id="submitSnippet" class="btn btn-primary">Save</button>
+      </form>
+      
+      <h2 id="bodyTitle"></h2>
+      <pre><code id="bodySnippetBody"></code></pre>
+      <h4 id="bodyDescription"></h4>
+      <h4 id="bodyLanguage"></h4>
+      <h4 id="bodyDate"></h4>
+
+    </div>
+  </div>
 
 </div>
 
 <script>
 
   // Event handler for "Add New Snippet" button click
-  $("#addSnippet").on("click", function(event){
-      event.preventDefault();
+  $("#addSnippet").on("click", function (event) {
+    event.preventDefault();
 
-      // Show the form for adding a character
-      $("#newSnippetArea").show();
-    });
+    // Show the form for adding a character
+    $("#newSnippetArea").show();
+  });
+
+  $("li").on("click", function(event){
+    $("#newSnippetArea").hide();
+    const id = $(this).val();
+        $.ajax({
+            url: "api/" + id,
+            method: "POST"
+            //Send user back to homepage for refresh
+        }).then(function(data){
+          $("#bodyTitle").text(data[0].snippetTitle);
+          $("#bodySnippetBody").html(data[0].snippetBody);
+        });
+
+  });
 
 </script>
