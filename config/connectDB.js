@@ -31,7 +31,3 @@ if (process.env.database) {
     database: creds.database
   };
 }
-
-module.exports = {
-    local  
-}
