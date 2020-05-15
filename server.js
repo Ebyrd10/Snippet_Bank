@@ -4,7 +4,7 @@ const express = require("express");
 const mysql = require("mysql");
 const app = express();
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8089;
 
 const dbConfig = process.env.NODE_ENV === "production" ? config.heroku : config.local;
 
