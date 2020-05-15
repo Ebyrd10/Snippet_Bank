@@ -1,6 +1,6 @@
--- DROP DATABASE IF EXISTS snippetsDB;
--- CREATE DATABASE snippetsDB;
--- USE snippetsDB;
+DROP DATABASE IF EXISTS snippetsDB;
+CREATE DATABASE snippetsDB;
+USE snippetsDB;
 
 
 CREATE TABLE snippets (
