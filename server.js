@@ -28,7 +28,6 @@ connection.connect((err) => {
 // =============================================================================
 
 
-
 app.get("/", (req, res) => {
   connection.query("SELECT * FROM snippets", (err, data) => {
     if (err) {
@@ -39,7 +38,7 @@ app.get("/", (req, res) => {
 });
 //Alternative Version
 // app.get("/", async (req, res) =>  {
-//   const data = await functions.selectAll(snippets)
+//   const data = await functions.selectAll(connection, snippets)
 //     res.render("index", { snippets: data });
 //   });
 

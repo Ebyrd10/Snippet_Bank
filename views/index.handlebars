@@ -4,31 +4,38 @@
 
 <div class="container">
   <div class="row">
-  {{!-- controls the generic filters --}}
-  <div class="filterBtn col-6 dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Filter Dropdown Title
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">Filter 1</a>
-    <a class="dropdown-item" href="#">Filter 2</a>
-    <a class="dropdown-item" href="#">Filter 3</a>
-    <a class="dropdown-item" href="#">Filter 3</a>
-  </div>
-  </div>
-  
-  {{!-- controls the date-based filter --}}
-  <div class="filterBtn col-6">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Filter Dropdown Title
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">Filter 1</a>
-    <a class="dropdown-item" href="#">Filter 2</a>
-    <a class="dropdown-item" href="#">Filter 3</a>
-    <a class="dropdown-item" href="#">Filter 3</a>
-  </div>
-  </div>
+    {{!-- This column size controls the overall column width of the box div containing both filter dropdowns --}}
+    <div class="col-sm-6"> 
+      <div class="row">
+        {{!-- controls the generic filters --}}
+        <div class="filterBtn col-6 dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false" style="width: 100%;">
+            <p id="mainFilterTitle">All</p>
+          </button>
+          <div class="dropdown-menu" id="languageDropDown" aria-labelledby="dropdownMenuButton">
+            {{!-- for each entry in filterSet --}}
+            {{!-- <a class="dropdown-item" id="dd{{name}}" href="#">{{name}}</a> --}}
+            <a class="dropdown-item ddLanguage" id="ddAll" href="#">All</a>
+            <a class="dropdown-item ddLanguage" id="ddJavascript" href="#">Javascript</a>
+            <a class="dropdown-item ddLanguage" id="ddHTML" href="#">Html</a>
+            <a class="dropdown-item ddLanguage" id="ddCSS" href="#">CSS</a>
+            {{!-- <a class="dropdown-item" class="ddLanguage" id="ddTag1"href="#">Tag 1</a> --}}
+          </div>
+        </div>
+
+        {{!-- controls the date-based filter --}}
+        <div class="filterBtn col-6 dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false" style="width: 100%;">
+            <p>Order by Date</p </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item ddCreationDate" id="asc" href="#">Date : Ascending </a>
+              <a class="dropdown-item ddCreationDate" id="desc" href="#">Date : Descending</a>
+            </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="jumbotron">
@@ -78,6 +85,40 @@
 </div>
 
 <script>
+
+  //Event handler for the main dropdown
+  $(".ddLanguage").on("click", function (event) {
+    //Sets the dropdown title to reflect the currently selected option
+    $("#mainFilterTitle").text($(this).text())
+    //if the option is all then make a seperate select all query
+    if ($(this).text() === "All") {
+      //then use functions.SelectAll
+    }
+    //or else condtionally select from the database
+    app.get("/", async (req, res) => {
+      const data = await functions.selectWhereEqual(connection, "snippets", "language", $(this).text())
+      res.render("index", { snippets: data });
+    });
+  })
+
+  //Event handler for creationdate drop down
+  $(".ddCreationDate").on("click", function (event) {
+    //if the filter is currently set to all then use a selectAll query
+    if ($("#mainFilterTitle").text() === "All") {
+      //then use 
+      app.get("/", async (req, res) => {
+        const data = await functions.SelectAllOrder(connection, "snippets", "id", $(this).attr('id'))
+        res.render("index", { snippets: data });
+      });
+    }
+    //if the filter is not set to all then use a more selective query
+    app.get("/", async (req, res) => {
+      //Sorts by id in the table, where the actual HTML element supplies the asc or desc in the element id
+      const data = await functions.selectWhereEqualOrderAsc(connection, "snippets", "language", $("#mainFilterTitle").text(), "id", $(this).attr('id'))
+      res.render("index", { snippets: data });
+    });
+  })
+
 
   // Event handler for "Add New Snippet" button click
   $("#addSnippet").on("click", function (event) {
