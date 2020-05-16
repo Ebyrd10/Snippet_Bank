@@ -13,9 +13,10 @@
       <div class="dropdown-menu" id="languageDropDown" aria-labelledby="dropdownMenuButton">
         {{!-- for each entry in filterSet --}}
         {{!-- <a class="dropdown-item" id="dd{{name}}" href="#">{{name}}</a> --}}
+        <a class="dropdown-item ddLanguage" id="ddAll" href="#">All</a>
         <a class="dropdown-item ddLanguage" id="ddJavascript" href="#">Javascript</a>
-        <a class="dropdown-item ddLanguage" id="ddHTML"href="#">Html</a>
-        <a class="dropdown-item ddLanguage" id="ddCSS"href="#">CSS</a>
+        <a class="dropdown-item ddLanguage" id="ddHTML" href="#">Html</a>
+        <a class="dropdown-item ddLanguage" id="ddCSS" href="#">CSS</a>
         {{!-- <a class="dropdown-item" class="ddLanguage" id="ddTag1"href="#">Tag 1</a> --}}
       </div>
     </div>
@@ -81,21 +82,26 @@
 
 <script>
 
-  //Event handler for language dropdown
-  $(".ddLanguage").on("click", function(event) {
-      app.get("/", async (req, res) => {
+  //Event handler for the main dropdown
+  $(".ddLanguage").on("click", function (event) {
+    if ($(this).text() === "All") {
+      //then use functions.SelectAll
+    }
+    //or else condtionally select from the database
+    app.get("/", async (req, res) => {
       const data = await functions.selectWhereEqual(connection, snippets, language = $(this).text())
       res.render("index", { snippets: data });
     });
-    })
-     //Event handler for creation date drop down
-  $(".ddCreationDate").on("click", function(event) {
-      app.get("/", async (req, res) => {
-        //Sorts by id in the table, where the actual HTML element supplies the asc or desc in the element id
+  })
+
+  //Event handler for creationdate drop down
+  $(".ddCreationDate").on("click", function (event) {
+    app.get("/", async (req, res) => {
+      //Sorts by id in the table, where the actual HTML element supplies the asc or desc in the element id
       const data = await functions.selectWhereEqualOrderAsc(connection, TABLE, condition, pass, "id", $(this).attr('id'))
       res.render("index", { snippets: data });
     });
-    })
+  })
 
 
   // Event handler for "Add New Snippet" button click
