@@ -80,6 +80,8 @@
         <h4 id="bodyDescription"></h4>
         <h4 id="bodyLanguage"></h4>
         <h4 id="bodyDate"></h4>
+        <button id="deleteSnippet">Delete</button>
+        <button id="updateSnippet">Update</button>
 
       </div>
       
@@ -90,7 +92,15 @@
 </div>
 
 <script>
-
+  //Update Snippet Functionality
+  $("#updateSnippet").on("click", function(event){
+    $("#newSnippetArea").show();
+    $("#newTitle").val($("#bodyTitle").text());
+    $("#newLanguage").val($("#bodyLanguage").text());
+    $("#newDescription").val($("#bodyDescription").text());
+    $("#newSnippetBody").val($("#bodySnippetBody").text());
+    
+  });
   //Event handler for the main dropdown
   $(".ddLanguage").on("click", function (event) {
     //Sets the dropdown title to reflect the currently selected option
@@ -146,6 +156,8 @@
 
       $("#bodyTitle").text(data[0].snippetTitle);
       $("#bodySnippetBody").text(data[0].snippetBody);
+      $("#bodyLanguage").text(data[0].language);
+      $("#bodyDescription").text(data[0].description);
       $('pre > code').each(function () {
         hljs.highlightBlock(this);
       });
