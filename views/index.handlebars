@@ -65,12 +65,14 @@
         <input type="text" class="form-control" name="newLanguage" id="newLanguage" value="" />
 
         <label>description</label>
-        <textarea type="text" class="form-control" name="newDescription" id="newDescription" value=""></textarea>
+        
+        <textarea type="text" class="form-control" name="newDescription" id="newDescription" value=""> </textarea>
 
         <label>snippetBody</label>
         <textarea type="text" class="form-control" name="newSnippetBody" id="newSnippetBody" value=""></textarea>
 
         <button type="submit" id="submitSnippet" class="btn btn-primary">Save</button>
+        <button type="submit" id="addNewSnippet" class="btn btn-primary" style= "display: none">Update!</button>
       </form>
 
       <div class="div" id="snippetCard" style="display: none">
@@ -99,8 +101,54 @@
     $("#newLanguage").val($("#bodyLanguage").text());
     $("#newDescription").val($("#bodyDescription").text());
     $("#newSnippetBody").val($("#bodySnippetBody").text());
-    
+
+    $("#snippetCard").hide(
+      function(){
+        
+        $("#addNewSnippet").show()
+        $("#submitSnippet").hide()
+        
+      }
+    );
   });
+
+  // Event handler for 
+  $("#addNewSnippet").on("click", function(event){
+  
+  });
+
+  // Event handler for "Add New Snippet" button click
+  $("#addSnippet").on("click", function (event) {
+    event.preventDefault();
+    // Show the form for adding a character
+    $("#newSnippetArea").show();
+    $("#snippetCard").hide();
+  });
+
+  $("li").on("click", function (event) {
+    $("#snippetCard").show();
+    $("#newSnippetArea").hide();
+    const id = $(this).val();
+    $.ajax({
+      url: "api/" + id,
+      method: "POST"
+      //Send user back to homepage for refresh
+    }).then(function (data) {
+
+      $("#bodyTitle").text(data[0].snippetTitle);
+      $("#bodySnippetBody").text(data[0].snippetBody);
+      $("#bodyLanguage").text(data[0].language);
+      $("#bodyDescription").text(data[0].description);
+      $('pre > code').each(function () {
+        hljs.highlightBlock(this);
+      });
+    });
+
+  });
+
+
+
+
   //Event handler for the main dropdown
   $(".ddLanguage").on("click", function (event) {
     //Sets the dropdown title to reflect the currently selected option
@@ -133,36 +181,5 @@
       res.render("index", { snippets: data });
     });
   })
-
-
-  // Event handler for "Add New Snippet" button click
-  $("#addSnippet").on("click", function (event) {
-    event.preventDefault();
-
-    // Show the form for adding a character
-    $("#newSnippetArea").show();
-    $("#snippetCard").hide();
-  });
-
-  $("li").on("click", function (event) {
-    $("#snippetCard").show();
-    $("#newSnippetArea").hide();
-    const id = $(this).val();
-    $.ajax({
-      url: "api/" + id,
-      method: "POST"
-      //Send user back to homepage for refresh
-    }).then(function (data) {
-
-      $("#bodyTitle").text(data[0].snippetTitle);
-      $("#bodySnippetBody").text(data[0].snippetBody);
-      $("#bodyLanguage").text(data[0].language);
-      $("#bodyDescription").text(data[0].description);
-      $('pre > code').each(function () {
-        hljs.highlightBlock(this);
-      });
-    });
-
-  });
 
 </script>
