@@ -38,6 +38,11 @@ app.get("/", (req, res) => {
     res.render("index", { snippets: data });
   });
 });
+//Alternative Version
+// app.get("/", async (req, res) =>  {
+//   const data = await functions.selectAll(connection, snippets)
+//     res.render("index", { snippets: data });
+//   });
 
 app.post("/", (req, res) => {
   connection.query(
@@ -55,6 +60,14 @@ app.post("/", (req, res) => {
     }
   );
   res.redirect("/");
+});
+
+app.post("/api/:id", function(req, res){
+  connection.query("SELECT * FROM snippets WHERE id=" + req.params.id, function(err, data) {
+    if (err) throw err;
+    // Log all results of the SELECT statement
+    res.json(data);
+  });
 });
 
 // PORT listener
