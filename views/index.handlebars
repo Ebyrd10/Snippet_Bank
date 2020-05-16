@@ -4,31 +4,31 @@
 
 <div class="container">
   <div class="row">
-  {{!-- controls the generic filters --}}
-  <div class="filterBtn col-6 dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Filter Dropdown Title
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">Filter 1</a>
-    <a class="dropdown-item" href="#">Filter 2</a>
-    <a class="dropdown-item" href="#">Filter 3</a>
-    <a class="dropdown-item" href="#">Filter 3</a>
-  </div>
-  </div>
-  
-  {{!-- controls the date-based filter --}}
-  <div class="filterBtn col-6">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Filter Dropdown Title
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">Filter 1</a>
-    <a class="dropdown-item" href="#">Filter 2</a>
-    <a class="dropdown-item" href="#">Filter 3</a>
-    <a class="dropdown-item" href="#">Filter 3</a>
-  </div>
-  </div>
+    {{!-- controls the generic filters --}}
+    <div class="filterBtn col-6 dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        Filter Dropdown Title
+      </button>
+      <div class="dropdown-menu" id="languageDropDown" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" id="ddJavascript" href="#">Javascript</a>
+        <a class="dropdown-item" id="ddHTML"href="#">Html</a>
+        <a class="dropdown-item" id="ddCSS"href="#">CSS</a>
+        <a class="dropdown-item" id="ddTag1"href="#">Tag 1</a>
+      </div>
+    </div>
+
+    {{!-- controls the date-based filter --}}
+    <div class="filterBtn col-6">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        Filter Dropdown Title
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="#">Date : Ascending </a>
+        <a class="dropdown-item" href="#">Date : Descending</a>
+      </div>
+    </div>
   </div>
 
   <div class="jumbotron">
@@ -78,6 +78,14 @@
 </div>
 
 <script>
+
+  //Event handler for language dropdown
+  $("#ddJavascript").click(function () {
+    app.get("/", async (req, res) => {
+      const data = await functions.selectWhereEqual(connection, snippets, language = $(this).text())
+      res.render("index", { snippets: data });
+    });
+  })
 
   // Event handler for "Add New Snippet" button click
   $("#addSnippet").on("click", function (event) {
