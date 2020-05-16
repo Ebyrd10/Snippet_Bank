@@ -43,6 +43,42 @@ app.get("/", (req, res) => {
 //   const data = await functions.selectAll(connection, snippets)
 //     res.render("index", { snippets: data });
 //   });
+app.post("/api/updates/", function(req, res) {
+
+  connection.query(
+    "UPDATE snippets SET ? WHERE ?",
+    [
+      {
+        snippetTitle: req.body.title,
+        snippetBody: req.body.body,
+        language: req.body.language,
+        description: req.body.description,
+      },
+      {
+        id: req.body.id,
+      },
+    ],
+    function (err, res) {
+      if (err) throw err;
+      console.log(res.affectedRows + " products updated!\n");
+  
+    }
+  );
+  
+  
+  console.log(req.body)
+
+  // connection.query("INSERT INTO plans (plan) VALUES (?)", [req.body.snippetData], function(err, result) {
+  //   if (err) {
+  //     return res.status(500).end();
+  //   }
+
+  //   // Send back the ID of the new plan
+  //   // res.json({ id: result.insertId });
+  //   console.log({ id: result.insertId });
+  // });
+});
+
 
 app.post("/", (req, res) => {
   connection.query(

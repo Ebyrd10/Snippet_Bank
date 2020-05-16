@@ -5,7 +5,7 @@
 <div class="container">
   <div class="row">
     {{!-- This column size controls the overall column width of the box div containing both filter dropdowns --}}
-    <div class="col-sm-6"> 
+    <div class="col-sm-6">
       <div class="row">
         {{!-- controls the generic filters --}}
         <div class="filterBtn col-6 dropdown">
@@ -58,6 +58,7 @@
     </div>
     <div class="col-9">
       <form id="newSnippetArea" style="display: none;" action="/" method="POST" name="snippets" class="form-group">
+
         <label>snippetTitle</label>
         <input type="text" class="form-control" name="newTitle" id="newTitle" value="" />
 
@@ -65,18 +66,22 @@
         <input type="text" class="form-control" name="newLanguage" id="newLanguage" value="" />
 
         <label>description</label>
-        
+
         <textarea type="text" class="form-control" name="newDescription" id="newDescription" value=""> </textarea>
 
         <label>snippetBody</label>
         <textarea type="text" class="form-control" name="newSnippetBody" id="newSnippetBody" value=""></textarea>
 
         <button type="submit" id="submitSnippet" class="btn btn-primary">Save</button>
-        <button type="submit" id="addNewSnippet" class="btn btn-primary" style= "display: none">Update!</button>
+
+        <button type="submit" id="saveUpdatedSnippet" class="btn btn-primary" style="display: none">Update!</button>
+
       </form>
+
 
       <div class="div" id="snippetCard" style="display: none">
 
+        <h2 id="bodyID" style= "display: none"></h2>
         <h2 id="bodyTitle"></h2>
         <pre><code id="bodySnippetBody"></code></pre>
         <h4 id="bodyDescription"></h4>
@@ -86,7 +91,7 @@
         <button id="updateSnippet">Update</button>
 
       </div>
-      
+
 
     </div>
   </div>
@@ -94,8 +99,10 @@
 </div>
 
 <script>
+
+  let selectedSnippet;
   //Update Snippet Functionality
-  $("#updateSnippet").on("click", function(event){
+  $("#updateSnippet").on("click", function (event) {
     $("#newSnippetArea").show();
     $("#newTitle").val($("#bodyTitle").text());
     $("#newLanguage").val($("#bodyLanguage").text());
@@ -103,19 +110,40 @@
     $("#newSnippetBody").val($("#bodySnippetBody").text());
 
     $("#snippetCard").hide(
-      function(){
-        
-        $("#addNewSnippet").show()
+      function () {
+
+        $("#saveUpdatedSnippet").show()
         $("#submitSnippet").hide()
-        
+
       }
     );
   });
 
   // Event handler for 
-  $("#addNewSnippet").on("click", function(event){
-  
-  });
+  $("#saveUpdatedSnippet").on("click", function (event) {
+    event.preventDefault();
+
+
+    var snippetData = {
+
+      id: $("#bodyID").text(),
+      title: $("#newTitle").val(),
+      body: $("#newSnippetBody").val(),
+      language: $("#newLanguage").val(),
+      description: $("#newDescription").val(),
+
+    }
+    
+    $.ajax("/api/updates/", {
+      type: "POST",
+      data: snippetData
+    }).done(
+      location.reload("/")
+    )
+    
+
+  })
+
 
   // Event handler for "Add New Snippet" button click
   $("#addSnippet").on("click", function (event) {
@@ -126,6 +154,8 @@
   });
 
   $("li").on("click", function (event) {
+    
+    
     $("#snippetCard").show();
     $("#newSnippetArea").hide();
     const id = $(this).val();
@@ -135,6 +165,7 @@
       //Send user back to homepage for refresh
     }).then(function (data) {
 
+      $("#bodyID").text(data[0].id);
       $("#bodyTitle").text(data[0].snippetTitle);
       $("#bodySnippetBody").text(data[0].snippetBody);
       $("#bodyLanguage").text(data[0].language);
@@ -142,11 +173,14 @@
       $('pre > code').each(function () {
         hljs.highlightBlock(this);
       });
+
+
+
     });
 
   });
 
-
+  
 
 
   //Event handler for the main dropdown
