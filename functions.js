@@ -65,24 +65,14 @@ module.exports = {
     });
     },
     //These two can be used for two filters at once, filtering a field and sorting by time
-    selectWhereEqualOrderAsc : function(connection, TABLE, condition, pass, orderCondition) {
+    selectWhereEqualOrder : function(connection, TABLE, condition, pass, orderCondition, AscOrDesc) {
         return new Promise(function(resolve,reject){
-        connection.query(`SELECT * FROM ${TABLE} WHERE ${condition} = ${pass} ORDER by ${orderCondition} ASC;`, function(err, data) {
+        connection.query(`SELECT * FROM ${TABLE} WHERE ${condition} = ${pass} ORDER by ${orderCondition} ${AscOrDesc};`, function(err, data) {
             if (err) {
               throw err;
             }
             resolve(data);
         });
     });
-    },
-    selectWhereEqualOrderDesc : function(connection, TABLE, condition, pass, orderCondition) {
-        return new Promise(function(resolve,reject){
-        connection.query(`SELECT * FROM ${TABLE} WHERE ${condition} = ${pass} ORDER by ${orderCondition} DESC;`, function(err, data) {
-            if (err) {
-              throw err;
-            }
-            resolve(data);
-        });
-    })
     },
 }

@@ -27,8 +27,8 @@
         Filter Dropdown Title
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" id="asc" href="#">Date : Ascending </a>
-        <a class="dropdown-item" id="desc" href="#">Date : Descending</a>
+        <a class="dropdown-item ddCreationDate" id="asc" href="#">Date : Ascending </a>
+        <a class="dropdown-item ddCreationDate" id="desc" href="#">Date : Descending</a>
       </div>
     </div>
   </div>
@@ -89,9 +89,10 @@
     });
     })
      //Event handler for creation date drop down
-  $(".ddLanguage").on("click", function(event) {
+  $(".ddCreationDate").on("click", function(event) {
       app.get("/", async (req, res) => {
-      const data = await functions.selectWhereEqual(connection, snippets, language = $(this).text())
+        //Sorts by id in the table, where the actual HTML element supplies the asc or desc in the element id
+      const data = await functions.selectWhereEqualOrderAsc(connection, TABLE, condition, pass, "id", $(this).attr('id'))
       res.render("index", { snippets: data });
     });
     })
