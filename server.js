@@ -68,6 +68,35 @@ app.post("/api/:id", function(req, res){
   });
 });
 
+app.get("/api/filter/:query", function(req,res){
+  const query = req.params.query;
+  connection.query(query, function(err, data) {
+    if (err) throw err;
+    res.render("index", { snippets: data });
+  });
+})
+
+app.get("/api/:language/:query", function(req,res){
+  const query = req.params.query;
+  console.log(`this is the language param: ${req.params.language}`)
+  const a =`${req.params.language}`
+  console.log(a)
+  console.log(Object.keys(a))
+  const aKeys = Object.keys(a);
+  console.log(Object.values(a))
+  console.log(aKeys)
+  let b = "";
+  for (let keyNum of aKeys){
+    b += keyNum
+    console.log(b.string)
+  }
+
+  connection.query(query, function(err, data) {
+    if (err) throw err;
+    res.render("index", { snippets: data, "selectedLanguage": b});
+  });
+})
+
 // PORT listener
 app.listen(PORT, () => {
   console.log("Server listening on: http://localhost:" + PORT);
