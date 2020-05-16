@@ -11,10 +11,12 @@
         Filter Dropdown Title
       </button>
       <div class="dropdown-menu" id="languageDropDown" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" id="ddJavascript" href="#">Javascript</a>
-        <a class="dropdown-item" id="ddHTML"href="#">Html</a>
-        <a class="dropdown-item" id="ddCSS"href="#">CSS</a>
-        <a class="dropdown-item" id="ddTag1"href="#">Tag 1</a>
+        {{!-- for each entry in filterSet --}}
+        {{!-- <a class="dropdown-item" id="dd{{name}}" href="#">{{name}}</a> --}}
+        <a class="dropdown-item ddLanguage" id="ddJavascript" href="#">Javascript</a>
+        <a class="dropdown-item ddLanguage" id="ddHTML"href="#">Html</a>
+        <a class="dropdown-item ddLanguage" id="ddCSS"href="#">CSS</a>
+        {{!-- <a class="dropdown-item" class="ddLanguage" id="ddTag1"href="#">Tag 1</a> --}}
       </div>
     </div>
 
@@ -25,8 +27,8 @@
         Filter Dropdown Title
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="#">Date : Ascending </a>
-        <a class="dropdown-item" href="#">Date : Descending</a>
+        <a class="dropdown-item" id="asc" href="#">Date : Ascending </a>
+        <a class="dropdown-item" id="desc" href="#">Date : Descending</a>
       </div>
     </div>
   </div>
@@ -80,12 +82,20 @@
 <script>
 
   //Event handler for language dropdown
-  $("#ddJavascript").click(function () {
-    app.get("/", async (req, res) => {
+  $(".ddLanguage").on("click", function(event) {
+      app.get("/", async (req, res) => {
       const data = await functions.selectWhereEqual(connection, snippets, language = $(this).text())
       res.render("index", { snippets: data });
     });
-  })
+    })
+     //Event handler for creation date drop down
+  $(".ddLanguage").on("click", function(event) {
+      app.get("/", async (req, res) => {
+      const data = await functions.selectWhereEqual(connection, snippets, language = $(this).text())
+      res.render("index", { snippets: data });
+    });
+    })
+
 
   // Event handler for "Add New Snippet" button click
   $("#addSnippet").on("click", function (event) {
