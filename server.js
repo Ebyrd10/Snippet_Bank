@@ -28,7 +28,7 @@ connection.connect((err) => {
 // =============================================================================
 
 // mysql.connection(dbConfig.local)
-console.log(dbConfig.local);
+// console.log(dbConfig.local);
 
 app.get("/", (req, res) => {
   connection.query("SELECT * FROM snippets", (err, data) => {
