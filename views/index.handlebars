@@ -73,11 +73,16 @@
         <button type="submit" id="submitSnippet" class="btn btn-primary">Save</button>
       </form>
 
-      <h2 id="bodyTitle"></h2>
-      <pre><code id="bodySnippetBody"></code></pre>
-      <h4 id="bodyDescription"></h4>
-      <h4 id="bodyLanguage"></h4>
-      <h4 id="bodyDate"></h4>
+      <div class="div" id="snippetCard" style="display: none">
+
+        <h2 id="bodyTitle"></h2>
+        <pre><code id="bodySnippetBody"></code></pre>
+        <h4 id="bodyDescription"></h4>
+        <h4 id="bodyLanguage"></h4>
+        <h4 id="bodyDate"></h4>
+
+      </div>
+      
 
     </div>
   </div>
@@ -126,9 +131,11 @@
 
     // Show the form for adding a character
     $("#newSnippetArea").show();
+    $("#snippetCard").hide();
   });
 
   $("li").on("click", function (event) {
+    $("#snippetCard").show();
     $("#newSnippetArea").hide();
     const id = $(this).val();
     $.ajax({
