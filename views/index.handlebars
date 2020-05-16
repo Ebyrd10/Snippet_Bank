@@ -8,7 +8,7 @@
     <div class="filterBtn col-6 dropdown">
       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">
-        Filter Dropdown Title
+        <p id="mainFilterTitle">All</p>
       </button>
       <div class="dropdown-menu" id="languageDropDown" aria-labelledby="dropdownMenuButton">
         {{!-- for each entry in filterSet --}}
@@ -25,7 +25,7 @@
     <div class="filterBtn col-6">
       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">
-        Filter Dropdown Title
+        Order by Date
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <a class="dropdown-item ddCreationDate" id="asc" href="#">Date : Ascending </a>
@@ -84,21 +84,33 @@
 
   //Event handler for the main dropdown
   $(".ddLanguage").on("click", function (event) {
+    //Sets the dropdown title to reflect the currently selected option
+    $("#mainFilterTitle").text($(this).text())
+    //if the option is all then make a seperate select all query
     if ($(this).text() === "All") {
       //then use functions.SelectAll
     }
     //or else condtionally select from the database
     app.get("/", async (req, res) => {
-      const data = await functions.selectWhereEqual(connection, snippets, language = $(this).text())
+      const data = await functions.selectWhereEqual(connection, "snippets", "language", $(this).text())
       res.render("index", { snippets: data });
     });
   })
 
   //Event handler for creationdate drop down
   $(".ddCreationDate").on("click", function (event) {
+    //if the filter is currently set to all then use a selectAll query
+    if  ($("#mainFilterTitle").text() === "All") {
+      //then use 
+      app.get("/", async (req, res) => {
+      const data = await functions.SelectAllOrder(connection, "snippets", "id", $(this).attr('id'))
+      res.render("index", { snippets: data });
+      });
+    }
+    //if the filter is not set to all then use a more selective query
     app.get("/", async (req, res) => {
       //Sorts by id in the table, where the actual HTML element supplies the asc or desc in the element id
-      const data = await functions.selectWhereEqualOrderAsc(connection, TABLE, condition, pass, "id", $(this).attr('id'))
+      const data = await functions.selectWhereEqualOrderAsc(connection, "snippets", "language",  $("#mainFilterTitle").text() , "id", $(this).attr('id'))
       res.render("index", { snippets: data });
     });
   })

@@ -44,19 +44,9 @@ module.exports = {
     });
     },
     //These two functions select everything from a table but order by either asc or desc
-    selectAllAsc : function(connection, TABLE, orderCondition) {
+    selectAllOrder : function(connection, TABLE, orderCondition, AscOrDesc) {
         return new Promise(function(resolve,reject){
-        connection.query(`SELECT * FROM ${TABLE} ORDER by ${orderCondition} ASC;`, function(err, data) {
-            if (err) {
-              throw err;
-            }
-            resolve(data);
-        });
-    });
-    },
-    selectAllDesc : function(connection, TABLE, orderCondition) {
-        return new Promise(function(resolve,reject){
-        connection.query(`SELECT * FROM ${TABLE} ORDER by ${orderCondition} DESC;`, function(err, data) {
+        connection.query(`SELECT * FROM ${TABLE} ORDER by ${orderCondition} ${AscOrDesc};`, function(err, data) {
             if (err) {
               throw err;
             }
