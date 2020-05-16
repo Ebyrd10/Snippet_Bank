@@ -61,6 +61,14 @@ app.post("/", (req, res) => {
   res.redirect("/");
 });
 
+app.post("/api/:id", function(req, res){
+  connection.query("SELECT * FROM snippets WHERE id=" + req.params.id, function(err, data) {
+    if (err) throw err;
+    // Log all results of the SELECT statement
+    res.json(data);
+  });
+});
+
 // PORT listener
 app.listen(PORT, () => {
   console.log("Server listening on: http://localhost:" + PORT);
