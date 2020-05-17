@@ -18,7 +18,7 @@ $("#updateSnippet").on("click", function (event) {
     );
 });
 
-// Event handler for aok
+// Event handler for 
 $("#saveUpdatedSnippet").on("click", function (event) {
     event.preventDefault();
 
@@ -97,6 +97,7 @@ $("li").on("click", function (event) {
 
 
 
+
 //Handling the currently selected language
 const selectedLanguageConst = "{{ selectedLanguage }}";
   
@@ -104,7 +105,7 @@ const selectedLanguageConst = "{{ selectedLanguage }}";
 $("#mainFilterTitle").text(`${selectedLanguageConst}`)
 //safety logic to make sure that all is properly displayed if no langauge is currently selected
 if ($("#mainFilterTitle").text() === ""){
-  $("#mainFilterTitle").text("All")
+  $("#mainFilterTitle").text("all")
 }
 
 //Event handler for the main dropdown
@@ -133,8 +134,8 @@ $(".ddLanguage").on("click", function (event) {
 //Event handler for creationdate drop down
 $(".ddCreationDate").on("click", function (event) {
   //if the filter is currently set to all then use a selectAll query
-  if ($("#mainFilterTitle").text() === "All") {
-    const query = "SELECT * FROM snippets ORDER by id" + `${$(this).attr('id')};`
+  if ($("#mainFilterTitle").text() === "all") {
+    const query = "SELECT * FROM snippets ORDER by id " + `${$(this).attr('id')};`
     $.ajax({
       url: `/api/filter/all/${query}`,
       method: "get"
