@@ -30,15 +30,28 @@ $("#saveUpdatedSnippet").on("click", function (event) {
         language: $("#detailLanguage").val(),
         description: $("#detailDescription").val(),
     }
+    console.log("updating snippet")
+    console.log(snippetData)
 
-    $.ajax("/api/updates/", {
+    var request = $.ajax("/api/updates/", {
         type: "POST",
         data: snippetData
-    }).done(
+    });
+
+    request.done(function (data) {
+        // console.log("success")
+        // console.log(data)
+        $("#error").hide();
+        // no errors reload page
         location.reload("/")
-    )
+    });
 
-
+    request.fail(function (data) {
+        // console.log("failure")
+        // console.log(data)
+        $("#error").show();
+        $("#error").text(data.responseText);
+    });
 })
 
 
@@ -49,6 +62,8 @@ $("#addSnippet").on("click", function (event) {
     $("#newSnippetArea").show();
     $("#detailSnippetArea").hide();
     $("#snippetCard").hide();
+    $("#submitSnippet").show()
+
 });
 
 $("li").on("click", function (event) {
@@ -62,7 +77,8 @@ $("li").on("click", function (event) {
         method: "POST"
         //Send user back to homepage for refresh
     }).then(function (data) {
-
+        // console.log("snippet data")
+        // console.log(data)
         $("#bodyID").text(data[0].id);
         $("#bodyTitle").text(data[0].snippetTitle);
         $("#bodySnippetBody").text(data[0].snippetBody);
