@@ -65,4 +65,24 @@ module.exports = {
         });
     });
     },
+    selectWhereEqualOrderAsc : function(connection, TABLE, condition, pass, orderCondition) {
+        return new Promise(function(resolve,reject){
+        connection.query(`SELECT * FROM ${TABLE} WHERE ${condition} = ${pass} ORDER by ${orderCondition} asc;`, function(err, data) {
+            if (err) {
+              throw err;
+            }
+            resolve(data);
+        });
+    });
+    },
+    selectWhereEqualOrderDesc : function(connection, TABLE, condition, pass, orderCondition) {
+        return new Promise(function(resolve,reject){
+        connection.query(`SELECT * FROM ${TABLE} WHERE ${condition} = ${pass} ORDER by ${orderCondition} desc;`, function(err, data) {
+            if (err) {
+              throw err;
+            }
+            resolve(data);
+        });
+    });
+    },
 }
