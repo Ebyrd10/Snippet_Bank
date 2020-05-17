@@ -97,35 +97,58 @@ $("li").on("click", function (event) {
 
 
 
+//Handling the currently selected language
+const selectedLanguageConst = "{{ selectedLanguage }}";
+  
+//if there is a selected language then set the dropdown title to the selected option
+$("#mainFilterTitle").text(`${selectedLanguageConst}`)
+//safety logic to make sure that all is properly displayed if no langauge is currently selected
+if ($("#mainFilterTitle").text() === ""){
+  $("#mainFilterTitle").text("All")
+}
+
 //Event handler for the main dropdown
 $(".ddLanguage").on("click", function (event) {
-    //Sets the dropdown title to reflect the currently selected option
-    $("#mainFilterTitle").text($(this).text())
-    //if the option is all then make a seperate select all query
-    if ($(this).text() === "All") {
-        //then use functions.SelectAll
-    }
+  //Sets the dropdown title to reflect the currently selected option
+  $("#mainFilterTitle").text($(this).text())
+  //if the option is all then make a seperate select all query
+  if ($(this).text() === "All") {
+    const query = "SELECT * FROM snippets;"
+    $.ajax({
+      url: `/api/filter/all/${query}`,
+      method: "get"
+    }).then(window.location.assign(`/api/filter/all/${query}`))
+  }
+  else {
     //or else condtionally select from the database
-    app.get("/", async (req, res) => {
-        const data = await functions.selectWhereEqual(connection, "snippets", "language", $(this).text())
-        res.render("index", { snippets: data });
-    });
+    const query = `SELECT * FROM snippets WHERE language =` + `"${$(this).text()}"`
+    console.log(query)
+    $.ajax({
+      url: `/api/filter/${$(this).text()}/${query}`,
+      method: "get"
+    }).then(window.location.assign(`/api/filter/${$(this).text()}/${query}`,))
+  }
 })
 
 //Event handler for creationdate drop down
 $(".ddCreationDate").on("click", function (event) {
-    //if the filter is currently set to all then use a selectAll query
-    if ($("#mainFilterTitle").text() === "All") {
-        //then use 
-        app.get("/", async (req, res) => {
-            const data = await functions.SelectAllOrder(connection, "snippets", "id", $(this).attr('id'))
-            res.render("index", { snippets: data });
-        });
-    }
+  //if the filter is currently set to all then use a selectAll query
+  if ($("#mainFilterTitle").text() === "All") {
+    const query = "SELECT * FROM snippets ORDER by id" + `${$(this).attr('id')};`
+    $.ajax({
+      url: `/api/filter/all/${query}`,
+      method: "get"
+    }).then(window.location.assign(`/api/filter/all/${query}`))
+  }
+  else {
     //if the filter is not set to all then use a more selective query
-    app.get("/", async (req, res) => {
-        //Sorts by id in the table, where the actual HTML element supplies the asc or desc in the element id
-        const data = await functions.selectWhereEqualOrderAsc(connection, "snippets", "language", $("#mainFilterTitle").text(), "id", $(this).attr('id'))
-        res.render("index", { snippets: data });
-    });
-})
+    //Sorts by id in the table, where the actual HTML element supplies the asc or desc in the element id
+  const query = `SELECT * FROM snippets WHERE language =` + `"${$("#mainFilterTitle").text()}"` + " ORDER by id " + `${$(this).attr('id')};`
+    console.log(query)
+    $.ajax({
+      url: `/api/filter/${$("#mainFilterTitle").text()}/${query}`,
+      method: "get"
+    }).then(window.location.assign(`/api/filter/${$("#mainFilterTitle").text()}/${query}`,))
+
+  }
+});
