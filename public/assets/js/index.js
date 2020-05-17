@@ -18,7 +18,7 @@ $("#updateSnippet").on("click", function (event) {
     );
 });
 
-// Event handler for 
+// Event handler for aok
 $("#saveUpdatedSnippet").on("click", function (event) {
     event.preventDefault();
 
