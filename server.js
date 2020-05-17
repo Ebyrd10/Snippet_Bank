@@ -68,7 +68,7 @@ app.post("/api/updates/", function (req, res) {
         res.json(errSave);
         return res
       } else {
-        console.log(res.affectedRows + " products updated!\n");
+        console.log( req.body.id +" "+ req.body.title + " updated!\n");
 
         res.status(200)
         // needed for jquery done to work
