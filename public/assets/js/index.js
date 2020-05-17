@@ -104,7 +104,7 @@ const selectedLanguageConst = "{{ selectedLanguage }}";
 //if there is a selected language then set the dropdown title to the selected option
 $("#mainFilterTitle").text(`${selectedLanguageConst}`)
 //safety logic to make sure that all is properly displayed if no langauge is currently selected
-if ($("#mainFilterTitle").text() === ""){
+if (($("#mainFilterTitle").text() === "")||($("#mainFilterTitle").text() === "{{ selectedLanguage }}")){
   $("#mainFilterTitle").text("all")
 }
 
@@ -113,12 +113,12 @@ $(".ddLanguage").on("click", function (event) {
   //Sets the dropdown title to reflect the currently selected option
   $("#mainFilterTitle").text($(this).text())
   //if the option is all then make a seperate select all query
-  if ($(this).text() === "All") {
+  if ($(this).text() === "all") {
     const query = "SELECT * FROM snippets;"
     $.ajax({
       url: `/api/filter/all/${query}`,
       method: "get"
-    }).then(window.location.assign(`/api/filter/all/${query}`))
+    }).done(window.location.assign(`api/filter/all/${query}`))
   }
   else {
     //or else condtionally select from the database
