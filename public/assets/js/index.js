@@ -1,11 +1,12 @@
 let selectedSnippet;
 //Update Snippet Functionality
 $("#updateSnippet").on("click", function (event) {
-    $("#newSnippetArea").show();
-    $("#newTitle").val($("#bodyTitle").text());
-    $("#newLanguage").val($("#bodyLanguage").text());
-    $("#newDescription").val($("#bodyDescription").text());
-    $("#newSnippetBody").val($("#bodySnippetBody").text());
+    $("#newSnippetArea").hide();
+    $("#detailSnippetArea").show();
+    $("#detailTitle").val($("#bodyTitle").text());
+    $("#detailLanguage").val($("#bodyLanguage").text());
+    $("#detailDescription").val($("#bodyDescription").text());
+    $("#detailSnippetBody").val($("#bodySnippetBody").text());
 
     $("#snippetCard").hide(
         function () {
@@ -24,28 +25,33 @@ $("#saveUpdatedSnippet").on("click", function (event) {
 
     var snippetData = {
         id: $("#bodyID").text(),
-        title: $("#newTitle").val(),
-        body: $("#newSnippetBody").val(),
-        language: $("#newLanguage").val(),
-        description: $("#newDescription").val(),
+        title: $("#detailTitle").val(),
+        body: $("#detailSnippetBody").val(),
+        language: $("#detailLanguage").val(),
+        description: $("#detailDescription").val(),
     }
-    // empty values should be null
-    // for (const key in snippetData) {
-    //     if (snippetData.hasOwnProperty(key)) {
-    //         // if value is empty delete or set to null
-    //         if (!snippetData[key])
-    //             snippetData[key] = null
-    //     }
-    // }
+    console.log("updating snippet")
+    console.log(snippetData)
 
-    $.ajax("/api/updates/", {
+    var request = $.ajax("/api/updates/", {
         type: "POST",
         data: snippetData
-    }).done(
+    });
+
+    request.done(function (data) {
+        // console.log("success")
+        // console.log(data)
+        $("#error").hide();
+        // no errors reload page
         location.reload("/")
-    )
+    });
 
-
+    request.fail(function (data) {
+        // console.log("failure")
+        // console.log(data)
+        $("#error").show();
+        $("#error").text(data.responseText);
+    });
 })
 
 
@@ -54,7 +60,10 @@ $("#addSnippet").on("click", function (event) {
     event.preventDefault();
     // Show the form for adding a character
     $("#newSnippetArea").show();
+    $("#detailSnippetArea").hide();
     $("#snippetCard").hide();
+    $("#submitSnippet").show()
+
 });
 
 $("li").on("click", function (event) {
@@ -68,7 +77,8 @@ $("li").on("click", function (event) {
         method: "POST"
         //Send user back to homepage for refresh
     }).then(function (data) {
-
+        // console.log("snippet data")
+        // console.log(data)
         $("#bodyID").text(data[0].id);
         $("#bodyTitle").text(data[0].snippetTitle);
         $("#bodySnippetBody").text(data[0].snippetBody);

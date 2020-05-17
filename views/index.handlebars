@@ -47,11 +47,16 @@
 
   <!-- This is the form where a new character is added -->
   <div class="container-fluid">
-    {{#if error}}
+
     <div class="row">
-      <div class="col-12 alert-warning">{{error}}</div>
+      <div class="col-12 alert-warning" id="error">
+        {{#if error}}
+        <span>
+          {{error}}
+        </span>
+        {{/if}}
+      </div>
     </div>
-    {{/if}}
     <div class="row">
       <div class="col-3 list-container">
         <div class="card">
@@ -69,16 +74,47 @@
           <input type="text" class="form-control" name="newTitle" id="newTitle" value="{{newSnippet.newTitle}}" />
 
           <label>language</label>
-          <input type="text" class="form-control" name="newLanguage" id="newLanguage" value="{{newSnippet.newLanguage}}" />
+          <select class="form-control" name="newLanguage" id="newLanguage" value="{{detailSnippet.language}}">
+            <option value="">Select a language</option>
+            <option value="javascript">javascript</option>
+            <option value="css">css</option>
+            <option value="css">html</option>
+          </select>
 
           <label>description</label>
 
-          <textarea type="text" class="form-control" name="newDescription" id="newDescription">{{newSnippet.newDescription}}</textarea>
+          <textarea type="text" class="form-control" name="newDescription"
+            id="newDescription">{{newSnippet.newDescription}}</textarea>
 
           <label>snippetBody</label>
-          <textarea type="text" class="form-control" name="newSnippetBody" id="newSnippetBody">{{newSnippet.newSnippetBody}}</textarea>
+          <textarea type="text" class="form-control" name="newSnippetBody"
+            id="newSnippetBody">{{newSnippet.newSnippetBody}}</textarea>
 
           <button type="submit" id="submitSnippet" class="btn btn-primary">Save</button>
+
+
+        </form>
+        <form id="detailSnippetArea" style="display: none;" action="/" method="POST" name="snippets" class="form-group">
+
+          <label>snippetTitle</label>
+          <input type="text" class="form-control" name="detailTitle" id="detailTitle" value="{{detailSnippet.title}}" />
+
+          <label>language</label>
+          <select class="form-control" name="detailLanguage" id="detailLanguage" value="{{detailSnippet.language}}">
+            <option value="">Select a language</option>
+            <option value="javascript">javascript</option>
+            <option value="css">css</option>
+            <option value="css">html</option>
+          </select>
+
+          <label>description</label>
+
+          <textarea type="text" class="form-control" name="detailDescription"
+            id="detailDescription">{{detailSnippet.description}}</textarea>
+
+          <label>snippetBody</label>
+          <textarea type="text" class="form-control" name="detailSnippetBody"
+            id="detailSnippetBody">{{detailSnippet.body}}</textarea>
 
           <button type="submit" id="saveUpdatedSnippet" class="btn btn-primary" style="display: none">Update!</button>
 
@@ -106,6 +142,6 @@
 
 <script src="assets/js/index.js">
 
- 
+
 
 </script>

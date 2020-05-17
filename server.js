@@ -43,46 +43,48 @@ app.get("/", (req, res) => {
 //   const data = await functions.selectAll(connection, snippets)
 //     res.render("index", { snippets: data });
 //   });
-app.post("/api/updates/", function(req, res) {
+app.post("/api/updates/", function (req, res) {
+  // don't save empty values, should be null
+  req = convertEmptyValuesToNull(req);
 
   connection.query(
-    "UPDATE snippets SET ? WHERE ?",
+    "UPDATE snippets SET snippetTitle = ?, language = ?, description = ?, snippetBody = ? WHERE ?",
     [
-      {
-        snippetTitle: req.body.title,
-        snippetBody: req.body.body,
-        language: req.body.language,
-        description: req.body.description,
-      },
+      req.body.title,
+      req.body.language,
+      req.body.description,
+      req.body.body,
       {
         id: req.body.id,
       },
     ],
-    function (err, res) {
-      if (err) throw err;
-      console.log(res.affectedRows + " products updated!\n");
+    function (errSave, saveData) {
+      // if there is an error, return error, with different status
+      if (errSave) {
+        console.log("error on submit update")
+        console.log(errSave)
+        console.log(saveData)
+        res.status(400);
+        res.json(errSave);
+        return res
+      } else {
+        console.log(res.affectedRows + " products updated!\n");
+
+        res.status(200)
+        // needed for jquery done to work
+        res.json(null)
+        return res;
+      }
 
     }
   );
 
-
-  console.log(req.body)
-
-  // connection.query("INSERT INTO plans (plan) VALUES (?)", [req.body.snippetData], function(err, result) {
-  //   if (err) {
-  //     return res.status(500).end();
-  //   }
-
-  //   // Send back the ID of the new plan
-  //   // res.json({ id: result.insertId });
-  //   console.log({ id: result.insertId });
-  // });
 });
 function convertEmptyValuesToNull(req) {
   for (const key in req.body) {
     if (req.body.hasOwnProperty(key)) {
       // if value is empty delete or set to null
-      if (!req.body[key])
+      if (!(req.body[key].trim()))
         req.body[key] = null
     }
   }
@@ -100,7 +102,7 @@ app.post("/", (req, res) => {
   },
     (errSave, newdata) => {
       if (errSave) {
-        console.log("error on submit")
+        console.log("error on submit save")
         console.log(errSave)
         console.log(newdata)
         connection.query("SELECT * FROM snippets", (err, data) => {
@@ -111,7 +113,7 @@ app.post("/", (req, res) => {
           res.render("index", { snippets: data, error: errSave, newSnippet: req.body });
         });
       } else
-      res.redirect("/");
+        res.redirect("/");
     }
   );
 });
