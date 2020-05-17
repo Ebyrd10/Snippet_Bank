@@ -46,174 +46,66 @@
   </div>
 
   <!-- This is the form where a new character is added -->
-  <div class="row">
-    <div class="col-3 list-container">
-      <div class="card">
-        <ul class="list-group">
-          {{#each snippets}}
-          <li value={{id}}>{{snippetTitle}}</li>
-          {{/each}}
-        </ul>
-      </div>
+  <div class="container-fluid">
+    {{#if error}}
+    <div class="row">
+      <div class="col-12 alert-warning">{{error}}</div>
     </div>
-    <div class="col-9">
-      <form id="newSnippetArea" style="display: none;" action="/" method="POST" name="snippets" class="form-group">
+    {{/if}}
+    <div class="row">
+      <div class="col-3 list-container">
+        <div class="card">
+          <ul class="list-group">
+            {{#each snippets}}
+            <li value={{id}}>{{snippetTitle}}</li>
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+      <div class="col-9">
+        <form id="newSnippetArea" style="display: none;" action="/" method="POST" name="snippets" class="form-group">
 
-        <label>snippetTitle</label>
-        <input type="text" class="form-control" name="newTitle" id="newTitle" value="" />
+          <label>snippetTitle</label>
+          <input type="text" class="form-control" name="newTitle" id="newTitle" value="{{newSnippet.newTitle}}" />
 
-        <label>language</label>
-        <input type="text" class="form-control" name="newLanguage" id="newLanguage" value="" />
+          <label>language</label>
+          <input type="text" class="form-control" name="newLanguage" id="newLanguage" value="{{newSnippet.newLanguage}}" />
 
-        <label>description</label>
+          <label>description</label>
 
-        <textarea type="text" class="form-control" name="newDescription" id="newDescription" value=""> </textarea>
+          <textarea type="text" class="form-control" name="newDescription" id="newDescription">{{newSnippet.newDescription}}</textarea>
 
-        <label>snippetBody</label>
-        <textarea type="text" class="form-control" name="newSnippetBody" id="newSnippetBody" value=""></textarea>
+          <label>snippetBody</label>
+          <textarea type="text" class="form-control" name="newSnippetBody" id="newSnippetBody">{{newSnippet.newSnippetBody}}</textarea>
 
-        <button type="submit" id="submitSnippet" class="btn btn-primary">Save</button>
+          <button type="submit" id="submitSnippet" class="btn btn-primary">Save</button>
 
-        <button type="submit" id="saveUpdatedSnippet" class="btn btn-primary" style="display: none">Update!</button>
+          <button type="submit" id="saveUpdatedSnippet" class="btn btn-primary" style="display: none">Update!</button>
 
-      </form>
+        </form>
 
 
-      <div class="div" id="snippetCard" style="display: none">
+        <div class="div" id="snippetCard" style="display: none">
 
-        <h2 id="bodyID" style= "display: none"></h2>
-        <h2 id="bodyTitle"></h2>
-        <pre><code id="bodySnippetBody"></code></pre>
-        <h4 id="bodyDescription"></h4>
-        <h4 id="bodyLanguage"></h4>
-        <h4 id="bodyDate"></h4>
-        <button id="deleteSnippet">Delete</button>
-        <button id="updateSnippet">Update</button>
+          <h2 id="bodyID" style="display: none"></h2>
+          <h2 id="bodyTitle"></h2>
+          <pre><code id="bodySnippetBody"></code></pre>
+          <h4 id="bodyDescription"></h4>
+          <h4 id="bodyLanguage"></h4>
+          <h4 id="bodyDate"></h4>
+          <button id="deleteSnippet">Delete</button>
+          <button id="updateSnippet">Update</button>
+
+        </div>
+
 
       </div>
-
-
     </div>
   </div>
-
 </div>
 
-<script>
+<script src="assets/js/index.js">
 
-  let selectedSnippet;
-  //Update Snippet Functionality
-  $("#updateSnippet").on("click", function (event) {
-    $("#newSnippetArea").show();
-    $("#newTitle").val($("#bodyTitle").text());
-    $("#newLanguage").val($("#bodyLanguage").text());
-    $("#newDescription").val($("#bodyDescription").text());
-    $("#newSnippetBody").val($("#bodySnippetBody").text());
-
-    $("#snippetCard").hide(
-      function () {
-
-        $("#saveUpdatedSnippet").show()
-        $("#submitSnippet").hide()
-
-      }
-    );
-  });
-
-  // Event handler for 
-  $("#saveUpdatedSnippet").on("click", function (event) {
-    event.preventDefault();
-
-
-    var snippetData = {
-
-      id: $("#bodyID").text(),
-      title: $("#newTitle").val(),
-      body: $("#newSnippetBody").val(),
-      language: $("#newLanguage").val(),
-      description: $("#newDescription").val(),
-
-    }
-    
-    $.ajax("/api/updates/", {
-      type: "POST",
-      data: snippetData
-    }).done(
-      location.reload("/")
-    )
-    
-
-  })
-
-
-  // Event handler for "Add New Snippet" button click
-  $("#addSnippet").on("click", function (event) {
-    event.preventDefault();
-    // Show the form for adding a character
-    $("#newSnippetArea").show();
-    $("#snippetCard").hide();
-  });
-
-  $("li").on("click", function (event) {
-    
-    
-    $("#snippetCard").show();
-    $("#newSnippetArea").hide();
-    const id = $(this).val();
-    $.ajax({
-      url: "api/" + id,
-      method: "POST"
-      //Send user back to homepage for refresh
-    }).then(function (data) {
-
-      $("#bodyID").text(data[0].id);
-      $("#bodyTitle").text(data[0].snippetTitle);
-      $("#bodySnippetBody").text(data[0].snippetBody);
-      $("#bodyLanguage").text(data[0].language);
-      $("#bodyDescription").text(data[0].description);
-      $('pre > code').each(function () {
-        hljs.highlightBlock(this);
-      });
-
-
-
-    });
-
-  });
-
-  
-
-
-  //Event handler for the main dropdown
-  $(".ddLanguage").on("click", function (event) {
-    //Sets the dropdown title to reflect the currently selected option
-    $("#mainFilterTitle").text($(this).text())
-    //if the option is all then make a seperate select all query
-    if ($(this).text() === "All") {
-      //then use functions.SelectAll
-    }
-    //or else condtionally select from the database
-    app.get("/", async (req, res) => {
-      const data = await functions.selectWhereEqual(connection, "snippets", "language", $(this).text())
-      res.render("index", { snippets: data });
-    });
-  })
-
-  //Event handler for creationdate drop down
-  $(".ddCreationDate").on("click", function (event) {
-    //if the filter is currently set to all then use a selectAll query
-    if ($("#mainFilterTitle").text() === "All") {
-      //then use 
-      app.get("/", async (req, res) => {
-        const data = await functions.SelectAllOrder(connection, "snippets", "id", $(this).attr('id'))
-        res.render("index", { snippets: data });
-      });
-    }
-    //if the filter is not set to all then use a more selective query
-    app.get("/", async (req, res) => {
-      //Sorts by id in the table, where the actual HTML element supplies the asc or desc in the element id
-      const data = await functions.selectWhereEqualOrderAsc(connection, "snippets", "language", $("#mainFilterTitle").text(), "id", $(this).attr('id'))
-      res.render("index", { snippets: data });
-    });
-  })
+ 
 
 </script>
