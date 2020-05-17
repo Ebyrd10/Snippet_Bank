@@ -18,8 +18,8 @@
             {{!-- <a class="dropdown-item" id="dd{{name}}" href="#">{{name}}</a> --}}
             <a class="dropdown-item ddLanguage" id="ddAll" href="#">all</a>
             <a class="dropdown-item ddLanguage" id="ddJavascript" href="#">Javascript</a>
-            <a class="dropdown-item ddLanguage" id="ddHTML" href="#">Html</a>
-            <a class="dropdown-item ddLanguage" id="ddCSS" href="#">CSS</a>
+            <a class="dropdown-item ddLanguage" id="ddHTML" href="#">Html5</a>
+            <a class="dropdown-item ddLanguage" id="ddCSS" href="#">CSS3</a>
             {{!-- <a class="dropdown-item" class="ddLanguage" id="ddTag1"href="#">Tag 1</a> --}}
           </div>
         </div>
@@ -62,7 +62,8 @@
         <div class="card">
           <ul class="list-group">
             {{#each snippets}}
-            <li class="devicon-html5-plain" value={{id}}> {{snippetTitle}}</li>
+            
+            <li class="devicon-{{language}}-plain" value={{id}}> {{snippetTitle}}</li>
             {{/each}}
           </ul>
         </div>
@@ -77,8 +78,8 @@
           <select class="form-control" name="newLanguage" id="newLanguage" value="{{detailSnippet.language}}">
             <option value="">Select a language</option>
             <option value="javascript">javascript</option>
-            <option value="css">css</option>
-            <option value="html">html</option>
+            <option value="css3">css3</option>
+            <option value="html5">html5</option>
           </select>
 
           <label>description</label>
@@ -103,8 +104,8 @@
           <select class="form-control" name="detailLanguage" id="detailLanguage" value="{{detailSnippet.language}}">
             <option value="">Select a language</option>
             <option value="javascript">javascript</option>
-            <option value="css">css</option>
-            <option value="html">html</option>
+            <option value="css3">css</option>
+            <option value="html5">html</option>
           </select>
 
           <label>description</label>
@@ -158,7 +159,11 @@ $("#updateSnippet").on("click", function (event) {
     $("#saveUpdatedSnippet").show();
     $("#submitSnippet").hide();
   });
+
+  
+
 });
+
 
 $("#deleteSnippet").on("click", function (event) {
   event.preventDefault();
@@ -215,6 +220,8 @@ $("#addSnippet").on("click", function (event) {
   $("#detailSnippetArea").hide();
   $("#snippetCard").hide();
   $("#submitSnippet").show();
+
+  
 });
 
 $("li").on("click", function (event) {
