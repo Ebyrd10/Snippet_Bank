@@ -11,12 +11,12 @@
         <div class="filterBtn col-6 dropdown">
           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false" style="width: 100%;">
-            <p id="mainFilterTitle">All</p>
+            <p id="mainFilterTitle">all</p>
           </button>
           <div class="dropdown-menu" id="languageDropDown" aria-labelledby="dropdownMenuButton">
             {{!-- for each entry in filterSet --}}
             {{!-- <a class="dropdown-item" id="dd{{name}}" href="#">{{name}}</a> --}}
-            <a class="dropdown-item ddLanguage" id="ddAll" href="#">All</a>
+            <a class="dropdown-item ddLanguage" id="ddAll" href="#">all</a>
             <a class="dropdown-item ddLanguage" id="ddJavascript" href="#">Javascript</a>
             <a class="dropdown-item ddLanguage" id="ddHTML" href="#">Html</a>
             <a class="dropdown-item ddLanguage" id="ddCSS" href="#">CSS</a>
@@ -145,7 +145,6 @@
 {{!-- <script src="assets/js/index.js"></script> --}}
 
 <script>
-  let selectedSnippet;
 //Update Snippet Functionality
 $("#updateSnippet").on("click", function (event) {
   $("#newSnippetArea").hide();
@@ -223,7 +222,7 @@ $("li").on("click", function (event) {
   $("#newSnippetArea").hide();
   const id = $(this).val();
   $.ajax({
-    url: "api/" + id,
+    url: "/api/" + id,
     method: "POST",
     //Send user back to homepage for refresh
   }).then(function (data) {
@@ -248,7 +247,8 @@ const selectedLanguageConst = "{{ selectedLanguage }}";
 //if there is a selected language then set the dropdown title to the selected option
 $("#mainFilterTitle").text(`${selectedLanguageConst}`)
 //safety logic to make sure that all is properly displayed if no langauge is currently selected
-if (($("#mainFilterTitle").text() === "")||($("#mainFilterTitle").text() === "{{ selectedLanguage }}")){
+
+if ($("#mainFilterTitle").text() === ""){
   $("#mainFilterTitle").text("all")
 }
 
@@ -262,7 +262,7 @@ $(".ddLanguage").on("click", function (event) {
     $.ajax({
       url: `/api/filter/all/${query}`,
       method: "get"
-    }).done(window.location.assign(`api/filter/all/${query}`))
+    }).done(window.location.assign(`/api/filter/all/${query}`))
   }
   else {
     //or else condtionally select from the database
