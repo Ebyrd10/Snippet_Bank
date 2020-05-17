@@ -11,12 +11,12 @@
         <div class="filterBtn col-6 dropdown">
           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false" style="width: 100%;">
-            <p id="mainFilterTitle">All</p>
+            <p id="mainFilterTitle">all</p>
           </button>
           <div class="dropdown-menu" id="languageDropDown" aria-labelledby="dropdownMenuButton">
             {{!-- for each entry in filterSet --}}
             {{!-- <a class="dropdown-item" id="dd{{name}}" href="#">{{name}}</a> --}}
-            <a class="dropdown-item ddLanguage" id="ddAll" href="#">All</a>
+            <a class="dropdown-item ddLanguage" id="ddAll" href="#">all</a>
             <a class="dropdown-item ddLanguage" id="ddJavascript" href="#">Javascript</a>
             <a class="dropdown-item ddLanguage" id="ddHTML" href="#">Html</a>
             <a class="dropdown-item ddLanguage" id="ddCSS" href="#">CSS</a>
@@ -262,7 +262,7 @@ $(".ddLanguage").on("click", function (event) {
     $.ajax({
       url: `/api/filter/all/${query}`,
       method: "get"
-    }).done(window.location.assign(`api/filter/all/${query}`))
+    }).done(window.location.assign(`/api/filter/all/${query}`))
   }
   else {
     //or else condtionally select from the database
