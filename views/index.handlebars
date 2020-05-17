@@ -83,6 +83,26 @@
           <button type="submit" id="saveUpdatedSnippet" class="btn btn-primary" style="display: none">Update!</button>
 
         </form>
+        <form id="detailSnippetArea" style="display: none;" action="/" method="POST" name="snippets" class="form-group">
+
+          <label>snippetTitle</label>
+          <input type="text" class="form-control" name="detailTitle" id="detailTitle" value="{{detailSnippet.detailTitle}}" />
+
+          <label>language</label>
+          <input type="text" class="form-control" name="detailLanguage" id="detailLanguage" value="{{detailSnippet.detailLanguage}}" />
+
+          <label>description</label>
+
+          <textarea type="text" class="form-control" name="detailDescription" id="detailDescription">{{detailSnippet.detailDescription}}</textarea>
+
+          <label>snippetBody</label>
+          <textarea type="text" class="form-control" name="detailSnippetBody" id="detailSnippetBody">{{detailSnippet.detailSnippetBody}}</textarea>
+
+          <button type="submit" id="submitSnippet" class="btn btn-primary">Save</button>
+
+          <button type="submit" id="saveUpdatedSnippet" class="btn btn-primary" style="display: none">Update!</button>
+
+        </form>
 
 
         <div class="div" id="snippetCard" style="display: none">

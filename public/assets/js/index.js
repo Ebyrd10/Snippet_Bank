@@ -1,11 +1,12 @@
 let selectedSnippet;
 //Update Snippet Functionality
 $("#updateSnippet").on("click", function (event) {
-    $("#newSnippetArea").show();
-    $("#newTitle").val($("#bodyTitle").text());
-    $("#newLanguage").val($("#bodyLanguage").text());
-    $("#newDescription").val($("#bodyDescription").text());
-    $("#newSnippetBody").val($("#bodySnippetBody").text());
+    $("#newSnippetArea").hide();
+    $("#detailSnippetArea").show();
+    $("#detailTitle").val($("#bodyTitle").text());
+    $("#detailLanguage").val($("#bodyLanguage").text());
+    $("#detailDescription").val($("#bodyDescription").text());
+    $("#detailSnippetBody").val($("#bodySnippetBody").text());
 
     $("#snippetCard").hide(
         function () {
@@ -24,19 +25,11 @@ $("#saveUpdatedSnippet").on("click", function (event) {
 
     var snippetData = {
         id: $("#bodyID").text(),
-        title: $("#newTitle").val(),
-        body: $("#newSnippetBody").val(),
-        language: $("#newLanguage").val(),
-        description: $("#newDescription").val(),
+        title: $("#detailTitle").val(),
+        body: $("#detailSnippetBody").val(),
+        language: $("#detailLanguage").val(),
+        description: $("#detailDescription").val(),
     }
-    // empty values should be null
-    // for (const key in snippetData) {
-    //     if (snippetData.hasOwnProperty(key)) {
-    //         // if value is empty delete or set to null
-    //         if (!snippetData[key])
-    //             snippetData[key] = null
-    //     }
-    // }
 
     $.ajax("/api/updates/", {
         type: "POST",
@@ -54,6 +47,7 @@ $("#addSnippet").on("click", function (event) {
     event.preventDefault();
     // Show the form for adding a character
     $("#newSnippetArea").show();
+    $("#detailSnippetArea").hide();
     $("#snippetCard").hide();
 });
 

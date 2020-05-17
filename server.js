@@ -44,7 +44,8 @@ app.get("/", (req, res) => {
 //     res.render("index", { snippets: data });
 //   });
 app.post("/api/updates/", function(req, res) {
-
+  // don't save empty values, should be null
+  req = convertEmptyValuesToNull(req);
   connection.query(
     "UPDATE snippets SET ? WHERE ?",
     [
