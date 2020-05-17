@@ -223,7 +223,7 @@ $("li").on("click", function (event) {
   $("#newSnippetArea").hide();
   const id = $(this).val();
   $.ajax({
-    url: "api/" + id,
+    url: "/api/" + id,
     method: "POST",
     //Send user back to homepage for refresh
   }).then(function (data) {
@@ -248,7 +248,8 @@ const selectedLanguageConst = "{{ selectedLanguage }}";
 //if there is a selected language then set the dropdown title to the selected option
 $("#mainFilterTitle").text(`${selectedLanguageConst}`)
 //safety logic to make sure that all is properly displayed if no langauge is currently selected
-if (($("#mainFilterTitle").text() === "")||($("#mainFilterTitle").text() === "{{ selectedLanguage }}")){
+
+if ($("#mainFilterTitle").text() === ""){
   $("#mainFilterTitle").text("all")
 }
 
