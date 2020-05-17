@@ -27,6 +27,8 @@ connection.connect((err) => {
 
 // =============================================================================
 
+// mysql.connection(dbConfig.local)
+// console.log(dbConfig.local);
 
 app.get("/", (req, res) => {
   connection.query("SELECT * FROM snippets", (err, data) => {
@@ -41,27 +43,83 @@ app.get("/", (req, res) => {
 //   const data = await functions.selectAll(connection, snippets)
 //     res.render("index", { snippets: data });
 //   });
+app.post("/api/updates/", function (req, res) {
+  // don't save empty values, should be null
+  req = convertEmptyValuesToNull(req);
 
-app.post("/", (req, res) => {
   connection.query(
-    "INSERT INTO snippets SET ?",
-    {
-      snippetTitle: req.body.newTitle,
-      language: req.body.newLanguage,
-      description: req.body.newDescription,
-      snippetBody: req.body.newSnippetBody
-    },
-    (err, res) =>{
-      if (err){
-        return res.status(500).end();
+    "UPDATE snippets SET snippetTitle = ?, language = ?, description = ?, snippetBody = ? WHERE ?",
+    [
+      req.body.title,
+      req.body.language,
+      req.body.description,
+      req.body.body,
+      {
+        id: req.body.id,
+      },
+    ],
+    function (errSave, saveData) {
+      // if there is an error, return error, with different status
+      if (errSave) {
+        console.log("error on submit update")
+        console.log(errSave)
+        console.log(saveData)
+        res.status(400);
+        res.json(errSave);
+        return res
+      } else {
+        console.log( req.body.id +" "+ req.body.title + " updated!\n");
+
+        res.status(200)
+        // needed for jquery done to work
+        res.json(null)
+        return res;
       }
+
     }
   );
-  res.redirect("/");
+
+});
+function convertEmptyValuesToNull(req) {
+  for (const key in req.body) {
+    if (req.body.hasOwnProperty(key)) {
+      // if value is empty delete or set to null
+      if (!(req.body[key].trim()))
+        req.body[key] = null
+    }
+  }
+  return req
+}
+
+app.post("/", (req, res) => {
+  // don't save empty values, should be null
+  req = convertEmptyValuesToNull(req);
+  connection.query({
+    sql: `INSERT INTO snippets  
+    (snippetTitle, language, description, snippetBody) 
+    values(?,?,?,?)`,
+    values: [req.body.newTitle, req.body.newLanguage, req.body.newDescription, req.body.newSnippetBody]
+  },
+    (errSave, newdata) => {
+      if (errSave) {
+        console.log("error on submit save")
+        console.log(errSave)
+        console.log(newdata)
+        connection.query("SELECT * FROM snippets", (err, data) => {
+          if (err) {
+            throw err;
+          }
+          // if there is an error, return error, and also request
+          res.render("index", { snippets: data, error: errSave, newSnippet: req.body });
+        });
+      } else
+        res.redirect("/");
+    }
+  );
 });
 
-app.post("/api/:id", function(req, res){
-  connection.query("SELECT * FROM snippets WHERE id=" + req.params.id, function(err, data) {
+app.post("/api/:id", function (req, res) {
+  connection.query("SELECT * FROM snippets WHERE id=" + req.params.id, function (err, data) {
     if (err) throw err;
     // Log all results of the SELECT statement
     res.json(data);
