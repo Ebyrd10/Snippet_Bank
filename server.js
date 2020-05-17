@@ -68,6 +68,7 @@ app.post("/api/:id", function(req, res){
   });
 });
 
+//a filter route that just handles a specific query request
 app.get("/api/filter/:query", function(req,res){
   const query = req.params.query;
   connection.query(query, function(err, data) {
@@ -76,24 +77,12 @@ app.get("/api/filter/:query", function(req,res){
   });
 })
 
-app.get("/api/:language/:query", function(req,res){
+//an advanced filter control that manages the current language selection in additon to the overhaul query
+app.get("/api/filter/:language/:query", function(req,res){
   const query = req.params.query;
-  console.log(`this is the language param: ${req.params.language}`)
-  const a =`${req.params.language}`
-  console.log(a)
-  console.log(Object.keys(a))
-  const aKeys = Object.keys(a);
-  console.log(Object.values(a))
-  console.log(aKeys)
-  let b = "";
-  for (let keyNum of aKeys){
-    b += keyNum
-    console.log(b.string)
-  }
-
   connection.query(query, function(err, data) {
     if (err) throw err;
-    res.render("index", { snippets: data, "selectedLanguage": b});
+    res.render("index", { snippets: data, selectedLanguage: req.params.language});
   });
 })
 
