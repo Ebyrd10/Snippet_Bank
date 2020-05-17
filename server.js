@@ -126,6 +126,24 @@ app.post("/api/:id", function (req, res) {
   });
 });
 
+//a filter route that just handles a specific query request
+app.get("/api/filter/:query", function(req,res){
+  const query = req.params.query;
+  connection.query(query, function(err, data) {
+    if (err) throw err;
+    res.render("index", { snippets: data });
+  });
+})
+
+//an advanced filter control that manages the current language selection in additon to the overhaul query
+app.get("/api/filter/:language/:query", function(req,res){
+  const query = req.params.query;
+  connection.query(query, function(err, data) {
+    if (err) throw err;
+    res.render("index", { snippets: data, selectedLanguage: req.params.language});
+  });
+})
+
 // PORT listener
 app.listen(PORT, () => {
   console.log("Server listening on: http://localhost:" + PORT);
