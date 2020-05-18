@@ -6,8 +6,7 @@ const app = express();
 
 const PORT = process.env.PORT || 8089;
 
-const dbConfig =
-  process.env.NODE_ENV === "production" ? config.heroku : config.local;
+const dbConfig = process.env.NODE_ENV === "production" ? config.heroku : config.local;
 
 const connection = mysql.createConnection(dbConfig);
 
@@ -58,7 +57,7 @@ app.delete("/api/delete/:snippetID", function (req, res) {
       // console.log(id + " deleted!\n")
     }
   );
-    
+
   // console.log(req.params.snippetID);
 });
 
@@ -143,6 +142,35 @@ app.post("/", (req, res) => {
   );
 });
 
+//Applies search on keyword phrases that appear in either snippetTitle or description
+app.post("/api/search/", function (req, res) {
+  const splitStrArr = req.body.searchField.split(" ");
+  var query = `SELECT * FROM snippets WHERE `;
+  for (var i = 0; i < splitStrArr.length; i++) {
+    if (i == 0) {
+      query += `snippetTitle LIKE '%${splitStrArr[i]}%'`;
+    } else {
+      query += ` AND snippetTitle LIKE '%${splitStrArr[i]}%'`
+    }
+  }
+
+  for (var i = 0; i < splitStrArr.length; i++) {
+    if (i == 0) {
+      query += ` OR description LIKE '%${splitStrArr[i]}%'`
+    } else {
+      query += ` AND description LIKE '%${splitStrArr[i]}%'`
+    }
+  }
+  connection.query(query, function (err, data) {
+    if (err) throw err;
+    
+    res.render("index", { snippets: data });
+  })
+});
+
+
+
+
 app.post("/api/:id", function (req, res) {
   connection.query(
     "SELECT * FROM snippets WHERE id=" + req.params.id,
@@ -155,22 +183,24 @@ app.post("/api/:id", function (req, res) {
 });
 
 //a filter route that just handles a specific query request
-app.get("/api/filter/:query", function(req,res){
+app.get("/api/filter/:query", function (req, res) {
   const query = req.params.query;
-  connection.query(query, function(err, data) {
+  connection.query(query, function (err, data) {
     if (err) throw err;
     res.render("index", { snippets: data });
   });
 })
 
 //an advanced filter control that manages the current language selection in additon to the overhaul query
-app.get("/api/filter/:language/:query", function(req,res){
+app.get("/api/filter/:language/:query", function (req, res) {
   const query = req.params.query;
-  connection.query(query, function(err, data) {
+  connection.query(query, function (err, data) {
     if (err) throw err;
-    res.render("index", { snippets: data, selectedLanguage: req.params.language});
+    res.render("index", { snippets: data, selectedLanguage: req.params.language });
   });
-})
+});
+
+
 
 // PORT listener
 app.listen(PORT, () => {
