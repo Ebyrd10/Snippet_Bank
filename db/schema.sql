@@ -20,3 +20,12 @@ CREATE TABLE tags (
     tagName VARCHAR(50),
     PRIMARY KEY (id)
 );
+
+CREATE TABLE LinkingTable (
+    id INTEGER(11) AUTO_INCREMENT NOT NULL,
+    linkSnippetID INTEGER,
+    linkTagID INTEGER,
+    PRIMARY KEY (id),
+    FOREIGN KEY(linkSnippetID) REFERENCES snippets(id),
+    FOREIGN KEY(linkTagID) REFERENCES tags(id)
+);

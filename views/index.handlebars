@@ -279,7 +279,7 @@ $(".ddLanguage").on("click", function (event) {
 $(".ddCreationDate").on("click", function (event) {
   //if the filter is currently set to all then use a selectAll query
   if ($("#mainFilterTitle").text() === "all") {
-    const query = "SELECT * FROM snippets ORDER by id " + `${$(this).attr('id')};`
+    const query = "SELECT * FROM snippets ORDER by createdDate " + `${$(this).attr('id')};`
     $.ajax({
       url: `/api/filter/all/${query}`,
       method: "get"
@@ -288,7 +288,7 @@ $(".ddCreationDate").on("click", function (event) {
   else {
     //if the filter is not set to all then use a more selective query
     //Sorts by id in the table, where the actual HTML element supplies the asc or desc in the element id
-  const query = `SELECT * FROM snippets WHERE language =` + `"${$("#mainFilterTitle").text()}"` + " ORDER by id " + `${$(this).attr('id')};`
+  const query = `SELECT * FROM snippets WHERE language =` + `"${$("#mainFilterTitle").text()}"` + " ORDER by createdDate " + `${$(this).attr('id')};`
     console.log(query)
     $.ajax({
       url: `/api/filter/${$("#mainFilterTitle").text()}/${query}`,
