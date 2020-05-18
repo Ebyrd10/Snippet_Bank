@@ -85,4 +85,21 @@ module.exports = {
         });
     });
     },
+    //Adds a new tag to the tags table
+    makeNewTag : function(connection, tagName){
+        //`INSERT INTO tags (tagName) VALUES (${tagName});`
+    },
+    //Tags Handling Functions
+    addTagtoSnippet : function(connection, tagID, snippetID ){
+        return new Promise(function(resolve, reject){
+        //Check if the tag already exists, //if not then make a new tag
+        makeNewTag(connection, tagName)
+        
+        //then since the tag exists we add that tagID to the snippetID
+        //if the id snippet has a tag with the exact same tagName then do not add the tag
+        const query =`INSERT INTO linkingTable (linkSnippetID, linkTagID) VALUES (${snippetID}, ${tagID});`
+    
+        });
+    },
+
 }
