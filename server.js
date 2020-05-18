@@ -205,6 +205,20 @@ app.get("/api/filter/:language/:query", function (req, res) {
   });
 });
 
+//Tag Api Routes
+//DELETE
+app.delete("/api/deleteTag/:snippetID/:tagName", function (req, res) {
+  const snippetID = req.params.snippetID;
+  const tagName = req.params.tagName;
+  tagsManipulate.DeleteTag(connection, tagName, snippetID);
+});
+//ADD
+app.post("/api/addTag/:snippetID/:tagName", function (req, res) {
+  const snippetID = req.params.snippetID;
+  const tagName = req.params.tagName;
+  tagsManipulate.addTagtoSnippet(connection, tagName, snippetID);
+});
+
 
 
 // PORT listener
