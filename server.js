@@ -4,6 +4,11 @@ const express = require("express");
 const mysql = require("mysql");
 const app = express();
 
+//Importing custom tag database manipulate functions
+const tagsManipulate = require("./tagsFunctions")
+//Example of how to use the function
+//tagsManipulate.addTagtoSnippet(connection, "My Name Tag is Purple", 2);
+
 const PORT = process.env.PORT || 8089;
 
 const dbConfig = process.env.NODE_ENV === "production" ? config.heroku : config.local;

@@ -88,18 +88,49 @@ module.exports = {
     //Adds a new tag to the tags table
     makeNewTag : function(connection, tagName){
         //`INSERT INTO tags (tagName) VALUES (${tagName});`
+        connection.query(`INSERT INTO tags (tagName) VALUES (${tagName});`, function(err, data) {
+            if (err) {
+              throw err;
+            }
+        })
+    },
+    //Returns the first tagID that matches a given tag name
+    getTagIDFromName : async function(connection, SearchedTagName){ //THIS FUNCTION IS COMPLETED
+        return new Promise(async function(resolve, reject){
+            const returnedData = await selectWhereEqual(connection, "tags", "tagName", SearchedTagName)
+            const returnedTagID = returnedData[0].id
+            resolve(returnedTagID)
+            })
     },
     //Tags Handling Functions
-    addTagtoSnippet : function(connection, tagID, snippetID ){
-        return new Promise(function(resolve, reject){
+    addTagtoSnippet : async function(connection, addTagName, addSnippetID ){
+        return new Promise(async function(resolve, reject){
         //Check if the tag already exists, //if not then make a new tag
-        makeNewTag(connection, tagName)
-        
-        //then since the tag exists we add that tagID to the snippetID
-        //if the id snippet has a tag with the exact same tagName then do not add the tag
-        const query =`INSERT INTO linkingTable (linkSnippetID, linkTagID) VALUES (${snippetID}, ${tagID});`
-    
+        const tagExistData = await selectWhereEqual(connection, "tags", "tagName", `"${addTagName}"`)
+        if (tagExistData !== []) {} //if the tag does exist then do nothing
+        //else make a new tag
+        else {
+        makeNewTag(connection, `"${addTagName}"`)
+        }
+        //grab either the previously found tag's id or the newly created tag's id
+        const addTagID = getTagIDFromName(connection, addTagName); 
+        //check if the snippet has this tag
+        const linkExistData =  await selectWhereEqual(connection, "LinkingTable", "addSnippetID", `"${addSnippetID}"`);
+        let alreadyHasTag = false;
+        for (entry of linkExistData){
+            if (linkTagID === addTagID){
+                alreadyHasTag = true;
+            }
+        }
+        if (alreadyHasTag){}
+        //if the snippet does not have this tag, then add the tag to the snippet
+        else {
+        const query =`INSERT INTO linkingTable (linkSnippetID, linkTagID) VALUES (${addSnippetID}, ${addTagID});`
+        }
         });
     },
 
 }
+
+
+
