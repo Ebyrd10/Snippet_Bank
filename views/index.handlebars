@@ -17,11 +17,17 @@
             {{!-- for each entry in filterSet --}}
             {{!-- <a class="dropdown-item" id="dd{{name}}" href="#">{{name}}</a> --}}
             <a class="dropdown-item ddLanguage" id="ddAll" href="#">all</a>
-            <a class="dropdown-item ddLanguage" id="ddJavascript" href="#">Javascript</a>
-            <a class="dropdown-item ddLanguage" id="ddHTML" href="#">Html5</a>
+
+            <a class="dropdown-item ddLanguage" id="ddC" href="#">C</a>
+            <a class="dropdown-item ddLanguage" id="ddCSharp" href="#">CSharp</a>
+            <a class="dropdown-item ddLanguage" id="ddCPlusPlus" href="#">C++</a>
             <a class="dropdown-item ddLanguage" id="ddCSS" href="#">CSS3</a>
-            <a class="dropdown-item ddLanguage" id="ddHeroku" href="#">Heroku</a>
+            <a class="dropdown-item ddLanguage" id="ddHTML" href="#">HTML5</a>
+            <a class="dropdown-item ddLanguage" id="ddJavascript" href="#">Javascript</a>
+            <a class="dropdown-item ddLanguage" id="ddJava" href="#">Java</a>
             <a class="dropdown-item ddLanguage" id="ddPython" href="#">Python</a>
+            <a class="dropdown-item ddLanguage" id="ddPHP" href="#">PHP</a>
+
             {{!-- <a class="dropdown-item" class="ddLanguage" id="ddTag1"href="#">Tag 1</a> --}}
           </div>
         </div>
@@ -86,11 +92,17 @@
           <label>language</label>
           <select class="form-control" name="newLanguage" id="newLanguage" value="{{detailSnippet.language}}">
             <option value="">Select a language</option>
-            <option value="javascript">javascript</option>
-            <option value="css3">css3</option>
-            <option value="html5">html5</option>
-            <option value="heroku">heroku</option>
-            <option value="python">python</option>
+            <option value="c">C</option>
+            <option value="csharp">C#</option>
+            <option value="cplusplus">C++</option>
+            <option value="css3">CSS3</option>
+            <option value="html5">HTML5</option>
+            <option value="javascript">Javascript</option>
+            <option value="java">Java</option>
+            <option value="python">Python</option>
+            <option value="php">PHP</option>
+
+
           </select>
 
           <label>description</label>
@@ -114,23 +126,26 @@
           <label>language</label>
           <select class="form-control" name="detailLanguage" id="detailLanguage" value="{{detailSnippet.language}}">
             <option value="">Select a language</option>
-            <option value="javascript">javascript</option>
-            <option value="css3">css</option>
-            <option value="html5">html</option>
-            <option value="heroku">heroku</option>
-            <option value="python">python</option>
-          </select>
+            <option value="c">C</option>
+            <option value="csharp">C#</option>
+            <option value="cplusplus">C++</option>
+            <option value="css3">CSS3</option>
+            <option value="html5">HTML5</option>
+            <option value="javascript">Javascript</option>
+            <option value="java">Java</option>
+            <option value="python">Python</option>
+            <option value="php">PHP</option>
 
-          <label>description</label>
+            <label>description</label>
 
-          <textarea type="text" class="form-control" name="detailDescription"
-            id="detailDescription">{{detailSnippet.description}}</textarea>
+            <textarea type="text" class="form-control" name="detailDescription"
+              id="detailDescription">{{detailSnippet.description}}</textarea>
 
-          <label>snippetBody</label>
-          <textarea type="text" class="form-control" name="detailSnippetBody"
-            id="detailSnippetBody">{{detailSnippet.body}}</textarea>
+            <label>snippetBody</label>
+            <textarea type="text" class="form-control" name="detailSnippetBody"
+              id="detailSnippetBody">{{detailSnippet.body}}</textarea>
 
-          <button type="submit" id="saveUpdatedSnippet" class="btn btn-primary" style="display: none">Update!</button>
+            <button type="submit" id="saveUpdatedSnippet" class="btn btn-primary" style="display: none">Update!</button>
 
         </form>
 
@@ -241,60 +256,60 @@
     });
   });
   //Handling the currently selected language
-const selectedLanguageConst = "{{ selectedLanguage }}";
-  
-//if there is a selected language then set the dropdown title to the selected option
-$("#mainFilterTitle").text(`${selectedLanguageConst}`)
-//safety logic to make sure that all is properly displayed if no langauge is currently selected
+  const selectedLanguageConst = "{{ selectedLanguage }}";
 
-if ($("#mainFilterTitle").text() === ""){
-  $("#mainFilterTitle").text("all")
-}
+  //if there is a selected language then set the dropdown title to the selected option
+  $("#mainFilterTitle").text(`${selectedLanguageConst}`)
+  //safety logic to make sure that all is properly displayed if no langauge is currently selected
 
-//Event handler for the main dropdown
-$(".ddLanguage").on("click", function (event) {
-  //Sets the dropdown title to reflect the currently selected option
-  $("#mainFilterTitle").text($(this).text())
-  //if the option is all then make a seperate select all query
-  if ($(this).text() === "all") {
-    const query = "SELECT * FROM snippets;"
-    $.ajax({
-      url: `/api/filter/all/${query}`,
-      method: "get"
-    }).done(window.location.assign(`/api/filter/all/${query}`))
+  if ($("#mainFilterTitle").text() === "") {
+    $("#mainFilterTitle").text("all")
   }
-  else {
-    //or else condtionally select from the database
-    const query = `SELECT * FROM snippets WHERE language =` + `"${$(this).text()}"`
-    console.log(query)
-    $.ajax({
-      url: `/api/filter/${$(this).text()}/${query}`,
-      method: "get"
-    }).then(window.location.assign(`/api/filter/${$(this).text()}/${query}`,))
-  }
-})
 
-//Event handler for creationdate drop down
-$(".ddCreationDate").on("click", function (event) {
-  //if the filter is currently set to all then use a selectAll query
-  if ($("#mainFilterTitle").text() === "all") {
-    const query = "SELECT * FROM snippets ORDER by createdDate " + `${$(this).attr('id')};`
-    $.ajax({
-      url: `/api/filter/all/${query}`,
-      method: "get"
-    }).then(window.location.assign(`/api/filter/all/${query}`))
-  }
-  else {
-    //if the filter is not set to all then use a more selective query
-    //Sorts by id in the table, where the actual HTML element supplies the asc or desc in the element id
-  const query = `SELECT * FROM snippets WHERE language =` + `"${$("#mainFilterTitle").text()}"` + " ORDER by createdDate " + `${$(this).attr('id')};`
-    console.log(query)
-    $.ajax({
-      url: `/api/filter/${$("#mainFilterTitle").text()}/${query}`,
-      method: "get"
-    }).then(window.location.assign(`/api/filter/${$("#mainFilterTitle").text()}/${query}`,))
+  //Event handler for the main dropdown
+  $(".ddLanguage").on("click", function (event) {
+    //Sets the dropdown title to reflect the currently selected option
+    $("#mainFilterTitle").text($(this).text())
+    //if the option is all then make a seperate select all query
+    if ($(this).text() === "all") {
+      const query = "SELECT * FROM snippets;"
+      $.ajax({
+        url: `/api/filter/all/${query}`,
+        method: "get"
+      }).done(window.location.assign(`/api/filter/all/${query}`))
+    }
+    else {
+      //or else condtionally select from the database
+      const query = `SELECT * FROM snippets WHERE language =` + `"${$(this).text()}"`
+      console.log(query)
+      $.ajax({
+        url: `/api/filter/${$(this).text()}/${query}`,
+        method: "get"
+      }).then(window.location.assign(`/api/filter/${$(this).text()}/${query}`))
+    }
+  })
 
-  }
-});
+  //Event handler for creationdate drop down
+  $(".ddCreationDate").on("click", function (event) {
+    //if the filter is currently set to all then use a selectAll query
+    if ($("#mainFilterTitle").text() === "all") {
+      const query = "SELECT * FROM snippets ORDER by createdDate " + `${$(this).attr('id')};`
+      $.ajax({
+        url: `/api/filter/all/${query}`,
+        method: "get"
+      }).then(window.location.assign(`/api/filter/all/${query}`))
+    }
+    else {
+      //if the filter is not set to all then use a more selective query
+      //Sorts by id in the table, where the actual HTML element supplies the asc or desc in the element id
+      const query = `SELECT * FROM snippets WHERE language =` + `"${$("#mainFilterTitle").text()}"` + " ORDER by createdDate " + `${$(this).attr('id')};`
+      console.log(query)
+      $.ajax({
+        url: `/api/filter/${$("#mainFilterTitle").text()}/${query}`,
+        method: "get"
+      }).then(window.location.assign(`/api/filter/${$("#mainFilterTitle").text()}/${query}`))
+
+    }
+  });
 
 </script>
