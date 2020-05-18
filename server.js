@@ -25,6 +25,18 @@ connection.connect((err) => {
   console.log("connected as id " + connection.threadId);
 });
 
+var languages = {
+  'c':'C',
+  'csharp':'CSharp',
+  'cplusplus':'C++',
+  'css3':'CSS3',
+  'html5':'HTML5',
+  'javascript':'Javascript',
+  'java':'Java',
+  'python':'Python',
+  'php':'PHP'
+}
+
 // =============================================================================
 
 // mysql.connection(dbConfig.local)
@@ -35,7 +47,7 @@ app.get("/", (req, res) => {
     if (err) {
       throw err;
     }
-    res.render("index", { snippets: data });
+    res.render("index", { snippets: data, languages:languages });
   });
 });
 //Alternative Version
@@ -135,6 +147,7 @@ app.post("/", (req, res) => {
             snippets: data,
             error: errSave,
             newSnippet: req.body,
+            languages:languages
           });
         });
       } else res.redirect("/");
@@ -163,8 +176,8 @@ app.post("/api/search/", function (req, res) {
   }
   connection.query(query, function (err, data) {
     if (err) throw err;
-    
-    res.render("index", { snippets: data });
+
+    res.render("index", { snippets: data, languages:languages });
   })
 });
 
@@ -187,7 +200,7 @@ app.get("/api/filter/:query", function (req, res) {
   const query = req.params.query;
   connection.query(query, function (err, data) {
     if (err) throw err;
-    res.render("index", { snippets: data });
+    res.render("index", { snippets: data, languages:languages });
   });
 })
 
@@ -196,7 +209,7 @@ app.get("/api/filter/:language/:query", function (req, res) {
   const query = req.params.query;
   connection.query(query, function (err, data) {
     if (err) throw err;
-    res.render("index", { snippets: data, selectedLanguage: req.params.language });
+    res.render("index", { snippets: data, selectedLanguage: req.params.language, languages:languages });
   });
 });
 
