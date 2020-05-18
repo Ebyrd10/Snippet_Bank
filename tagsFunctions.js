@@ -1,15 +1,4 @@
 const extraFunctions = require ("./functions")
-// import {selectWhereEqual} from `./functions` //This doesnt work :(
-// const selectWhereEqual = function (connection, TABLE, condition, pass) {
-//     return new Promise(function (resolve, reject) {
-//         connection.query(`SELECT * FROM ${TABLE} WHERE ${condition} = ${pass};`, function (err, data) {
-//             if (err) {
-//                 throw err;
-//             }
-//             resolve(data);
-//         });
-//     });
-// }
 
 
 //Adds a new tag to the tags table
