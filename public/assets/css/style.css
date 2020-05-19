@@ -1,4 +1,7 @@
-body {
+body{
+    background-color: #000000;
+}
+.container {
     background-color: #C5C6C7
 }
 
@@ -39,7 +42,7 @@ h1 {
     background-color: #1F2833;
 }
 
-form {
+form, #snippetCard {
     padding: 5px;
     background-color: #6E757C;
 }

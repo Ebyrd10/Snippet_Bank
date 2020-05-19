@@ -8,33 +8,7 @@
     <div class="col-sm-6">
       <div class="row">
         {{!-- controls the generic filters --}}
-        <div class="filterBtn col-6 dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false" style="width: 100%;">
-            <p id="mainFilterTitle">all</p>
-          </button>
-          <div class="dropdown-menu" id="languageDropDown" aria-labelledby="dropdownMenuButton">
-            {{!-- for each entry in filterSet --}}
-            {{!-- <a class="dropdown-item" id="dd{{name}}" href="#">{{name}}</a> --}}
-            <a class="dropdown-item ddLanguage" id="ddAll" href="#">all</a>
-            {{#each languages}}
-            <a class="dropdown-item ddLanguage" id="dd{{this}}" href="#">{{this}}</a>
-            {{/each}}
 
-            {{!-- <a class="dropdown-item" class="ddLanguage" id="ddTag1"href="#">Tag 1</a> --}}
-          </div>
-        </div>
-
-        {{!-- controls the date-based filter --}}
-        <div class="filterBtn col-6 dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false" style="width: 100%;">
-            <p>Order by Date</p </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item ddCreationDate" id="asc" href="#">Date : Ascending </a>
-              <a class="dropdown-item ddCreationDate" id="desc" href="#">Date : Descending</a>
-            </div>
-        </div>
       </div>
     </div>
   </div>
@@ -50,9 +24,43 @@
   <!-- This is the form where a new character is added -->
   <div class="container-fluid">
     <div class="row">
-      <div class="col-12">
+      <div class="col-3">
+        <span class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false" style="width: 100%;">
+            <span id="mainFilterTitle">all</span>
+          </button>
+          <div class="dropdown-menu" id="languageDropDown" aria-labelledby="dropdownMenuButton">
+            {{!-- for each entry in filterSet --}}
+            {{!-- <a class="dropdown-item" id="dd{{name}}" href="#">{{name}}</a> --}}
+            <a class="dropdown-item ddLanguage" id="ddAll" href="#">all</a>
+            {{#each languages}}
+            <a class="dropdown-item ddLanguage" id="dd{{this}}" href="#">{{this}}</a>
+            {{/each}}
+
+            {{!-- <a class="dropdown-item" class="ddLanguage" id="ddTag1"href="#">Tag 1</a> --}}
+          </div>
+        </span>
+      </div>
+
+      {{!-- controls the date-based filter --}}
+      <div class="col-3">
+        <span class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false" style="width: 100%;">
+            <span>Order by Date</span> </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item ddCreationDate" id="asc" href="#">Date : Ascending </a>
+            <a class="dropdown-item ddCreationDate" id="desc" href="#">Date : Descending</a>
+          </div>
+        </span>
+      </div>
+      <div class="col-6">
         <form action="/api/search/" method="POST" name="searchForm" class="form-group">
+
+          {{!-- <div class="col-8"> --}}
           <input type="text" class="form-control" name="searchField" placeholder="Search">
+          {{!-- </div> --}}
         </form>
       </div>
     </div>
@@ -130,6 +138,7 @@
 
 
           <label>description</label>
+
 
           <textarea type="text" class="form-control" name="detailDescription"
             id="detailDescription">{{detailSnippet.description}}</textarea>
