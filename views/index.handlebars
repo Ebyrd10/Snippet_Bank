@@ -21,16 +21,6 @@
             <a class="dropdown-item ddLanguage" id="dd{{this}}" href="#">{{this}}</a>
             {{/each}}
 
-            <a class="dropdown-item ddLanguage" id="ddC" href="#">C</a>
-            <a class="dropdown-item ddLanguage" id="ddCSharp" href="#">CSharp</a>
-            <a class="dropdown-item ddLanguage" id="ddCPlusPlus" href="#">C++</a>
-            <a class="dropdown-item ddLanguage" id="ddCSS" href="#">CSS3</a>
-            <a class="dropdown-item ddLanguage" id="ddHTML" href="#">HTML5</a>
-            <a class="dropdown-item ddLanguage" id="ddJavascript" href="#">Javascript</a>
-            <a class="dropdown-item ddLanguage" id="ddJava" href="#">Java</a>
-            <a class="dropdown-item ddLanguage" id="ddPython" href="#">Python</a>
-            <a class="dropdown-item ddLanguage" id="ddPHP" href="#">PHP</a>
-
             {{!-- <a class="dropdown-item" class="ddLanguage" id="ddTag1"href="#">Tag 1</a> --}}
           </div>
         </div>
@@ -124,6 +114,7 @@
             {{#each languages}}
             <option value="{{@key}}">{{this}}</option>
             {{/each}}
+
             <option value="">Select a language</option>
             <option value="c">C</option>
             <option value="csharp">C#</option>
@@ -135,6 +126,8 @@
             <option value="python">Python</option>
             <option value="php">PHP</option>
           </select>
+
+
 
           <label>description</label>
 
@@ -158,8 +151,8 @@
           <h4 id="bodyDescription"></h4>
           <h4 id="bodyLanguage"></h4>
           <h4 id="bodyDate"></h4>
-          <button id="deleteSnippet">Delete</button>
-          <button id="updateSnippet">Update</button>
+          <button class="btn" id="deleteSnippet">Delete</button>
+          <button class="btn" id="updateSnippet">Update</button>
 
         </div>
 
@@ -271,6 +264,8 @@
   if ($("#mainFilterTitle").text() === "") {
     $("#mainFilterTitle").text("all")
   }
+
+
 
   //Event handler for the main dropdown
   $(".ddLanguage").on("click", function (event) {
