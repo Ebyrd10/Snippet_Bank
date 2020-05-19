@@ -14,8 +14,8 @@
     </div>
 
     <div class="jumbotron">
-        <h1>Snippet Bank</h1>
-        <h3>[rough template]</h3>
+        <h1>Snippets Bank</h1>
+        <h3>Your code snippets library!</h3>
         <hr>
         <button id="addSnippet" class="btn btn-danger btn-lg"><span class="fa fa-plus"></span> Add New Snippet</button>
     </div>
@@ -27,7 +27,7 @@
             <div class="col-3">
                 <span class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%;">
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span id="mainFilterTitle">all</span>
                     </button>
                     <div class="dropdown-menu" id="languageDropDown" aria-labelledby="dropdownMenuButton">
@@ -46,8 +46,8 @@
             {{!-- controls the date-based filter --}}
             <div class="col-3">
                 <span class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%;">
+                    <button class="btn btn-secondary dropdown-toggle orderby" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span>Order by Date</span> </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item ddCreationDate" id="asc" href="#">Date : Ascending </a>
@@ -74,7 +74,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-3 list-container">
+            <div class="col-2 list-container snippets">
                 <div class="card">
                     <ul class="list-group">
                         {{#each snippets}}
@@ -121,7 +121,14 @@
                     <input type="text" class="form-control" name="detailTitle" id="detailTitle"
                         value="{{detailSnippet.title}}" />
 
-            {{!-- <option value="">Select a language</option>
+                    <label>language</label>
+                    <select class="form-control" name="detailLanguage" id="detailLanguage"
+                        value="{{detailSnippet.language}}">
+                        {{#each languages}}
+                        <option value="{{@key}}">{{this}}</option>
+                        {{/each}}
+
+                        {{!-- <option value="">Select a language</option>
             <option value="c">C</option>
             <option value="csharp">C#</option>
             <option value="cplusplus">C++</option>
@@ -131,18 +138,6 @@
             <option value="java">Java</option>
             <option value="python">Python</option>
             <option value="php">PHP</option> --}}
-          </select>
-
-                        <option value="">Select a language</option>
-                        <option value="c">C</option>
-                        <option value="csharp">C#</option>
-                        <option value="cplusplus">C++</option>
-                        <option value="css3">CSS3</option>
-                        <option value="html5">HTML5</option>
-                        <option value="javascript">Javascript</option>
-                        <option value="java">Java</option>
-                        <option value="python">Python</option>
-                        <option value="php">PHP</option>
                     </select>
 
 
