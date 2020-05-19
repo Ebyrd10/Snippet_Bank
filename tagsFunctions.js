@@ -17,7 +17,6 @@ const getAllTagsofSnippet = async function (connection, snippetID) {
             const nameOfTag = await getTagNamefromID(connection, idofTag);
             tagArray.push(nameOfTag)
         };
-        console.log(tagArray)
         resolve(tagArray)
     })
 };
@@ -80,8 +79,8 @@ const addTagtoSnippet = async function (connection, addTagName, addSnippetID) {
     return new Promise(async function (resolve, reject) {
         //Check if the tag already exists, //if not then make a new tag
         const tagExistData = await extraFunctions.selectWhereEqual(connection, "tags", "tagName", `"${addTagName}"`)
-        console.log(tagExistData)
-        if (tagExistData !== []) {} //if the tag does exist then do nothing
+        //if the tag does exist then do nothing
+        if (tagExistData.length > 0) {} 
         //else make a new tag
         else {
             makeNewTag(connection, `"${addTagName}"`)

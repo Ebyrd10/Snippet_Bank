@@ -168,9 +168,7 @@
 
       </div>
       <div class="col-2" id="tagArea">
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
+          <ul id="currentTagList"></ul>
       </div>
     </div>
   </div>
@@ -266,6 +264,16 @@
     $.ajax({
       url: "/api/displayTags/" + id,
       method: "POST"
+    }).then(function (data) {
+        //clears the tag list of old tags from previously selected
+        $("#currentTagList").text("");
+        //Display the tag list
+        const tagUL = $("#currentTagList");
+        for (datapoint of data){
+            const newLi = $(`<li class="tagButton">`).text(datapoint)
+            tagUL.append(newLi)
+        }
+
     })
   });
   //Handling the currently selected language
