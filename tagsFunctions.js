@@ -1,18 +1,18 @@
-const extraFunctions = require ("./functions")
+const extraFunctions = require("./functions")
 
 const getAllTagsofSnippet = async function (connection, snippetID) {
     return new Promise(async function (resolve, reject) {
         const tagArray = [];
         const tagArrayIDs = [];
         const returnedData = await extraFunctions.selectWhereEqual(connection, "LinkingTable", "linkSnippetID", `"${snippetID}"`)
-        for (linkEntry of returnedData){
+        for (linkEntry of returnedData) {
             tagArrayIDs.push(linkEntry.linkTagID)
         };
         //Alternatvie to the For Of loop above
         // for (i = 0; i < returnedData.length; i++){
         //     tagArrayIDs.push((returnedData[i].linkTagID))
         // }
-        for (id of tagArrayIDs){
+        for (id of tagArrayIDs) {
             const idofTag = id;
             const nameOfTag = await getTagNamefromID(connection, idofTag);
             tagArray.push(nameOfTag)
@@ -32,26 +32,24 @@ const makeNewTag = function (connection, tagName) {
 }
 //Deletes a tag from the a snippet in the linking table, if the tag has no links at all then the tag is deleted from the tags table
 const DeleteTag = async function (connection, tagName, snippetID) {
-    if (!snippetID) {
-        console.log("Must have a snippet value inputed")
-        return;
-    }
-    const tagID = await getTagIDFromName(tagName)
-    //First deletes the link between the snippet and the tab
-    connection.query(`DELETE From linkingTable WHERE linkTagID = ${tagID} AND linkSnippetID = ${snippetID};`, function (err, data) {
-        if (err) {
-            throw err;
-        }
-    }).then(
+    const tagID = await getTagIDFromName(connection, tagName)
+    connection.query(`DELETE FROM linkingTable WHERE linkTagID = ${tagID} AND linkSnippetID = ${snippetID};`, (err, data) => {
+    })
+    // .then(async function(connection, tagID){
         //then searches for all the total snippets that the tag is now associated with
-        connection.query(`SELECT From linkingTable WHERE linkTagID = ${tagID};`, function (err, data) {
-            if (data === []) {
-                //if the tag is no longer associated with any tag, it is removed from the tags table
-                connection.query(`DELETE From tags WHERE TagID = ${tagID};`, function (err, data) {
-                })
-            };
-        }))
+        // const returnedData = await extraFunctions.selectWhereEqual(connection, "linkingTable", "linkTagID", `${tagID}`)
+        // console.log(returnedData)
+        // connection.query(`SELECT From linkingTable WHERE linkTagID = ${tagID};`, function (err, data) {
+        //     if (data.length) {
+        //         //if the tag is no longer associated with any tag, it is removed from the tags table
+        //        connection.query(`DELETE From tags WHERE TagID = ${tagID};`, function (err, data) {
+        //        })
+        //     };
+    // })
+// })
 }
+
+
 //Returns the first tagID that matches a given tag name
 const getTagIDFromName = async function (connection, SearchedTagName) {
     return new Promise(async function (resolve, reject) {
@@ -74,7 +72,7 @@ const addTagtoSnippet = async function (connection, addTagName, addSnippetID) {
         //Check if the tag already exists, //if not then make a new tag
         const tagExistData = await extraFunctions.selectWhereEqual(connection, "tags", "tagName", `"${addTagName}"`)
         //if the tag does exist then do nothing
-        if (tagExistData.length > 0) {} 
+        if (tagExistData.length > 0) { }
         //else make a new tag
         else {
             makeNewTag(connection, `"${addTagName}"`)

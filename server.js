@@ -223,9 +223,7 @@ app.get("/api/filter/:language/:query", function (req, res) {
 app.post("/api/deleteTag/:snippetID/:tagName", function (req, res) {
   const snippetID = req.params.snippetID;
   const tagName = req.params.tagName;
-  console.log("got Here")
   tagsManipulate.DeleteTag(connection, tagName, snippetID);
-  console.log("got there")
 });
 //ADD
 app.post("/api/addTag/:snippetID/:tagName", async function (req, res) {
@@ -250,3 +248,6 @@ app.post("/api/displayTags/:snippetID", async function (req, res) {
 app.listen(PORT, () => {
   console.log("Server listening on: http://localhost:" + PORT);
 });
+
+
+tagsManipulate.DeleteTag(connection, "Apple", 3)
