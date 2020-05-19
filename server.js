@@ -231,6 +231,14 @@ app.post("/api/addTag/:snippetID/:tagName", function (req, res) {
   const tagName = req.params.tagName;
   tagsManipulate.addTagtoSnippet(connection, tagName, snippetID);
 });
+//DISPLAY ALL TAGS FOR A SNIPPET
+//when given a snippetID, returns an array of tag names associated with that snippet
+app.post("/api/displayTags/:snippetID", async function (req, res) {
+  const snippetID = req.params.snippetID;
+  const tagArray = await tagsManipulate.getAllTagsofSnippet(connection, snippetID);
+  //sends the tag array back to page
+  res.json(tagArray);
+});
 
 
 

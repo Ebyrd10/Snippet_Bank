@@ -1,5 +1,25 @@
 const extraFunctions = require ("./functions")
 
+const getAllTagsofSnippet = async function (connection, snippetID) {
+    return new Promise(async function (resolve, reject) {
+        const tagArray = [];
+        const tagArrayIDs = [];
+        const returnedData = await extraFunctions.selectWhereEqual(connection, "LinkingTable", "linkSnippetID", `"${snippetID}"`)
+        for (linkEntry of returnedData){
+            tagArrayIDs.push(linkEntry.linkTagID)
+        };
+        //Alternatvie to the For Of loop above
+        // for (i = 0; i < returnedData.length; i++){
+        //     tagArrayIDs.push((returnedData[i].linkTagID))
+        // }
+        for (id of tagArrayIDs){
+            const idofTag = id;
+            const nameOfTag = await getTagNamefromID(connection, idofTag);
+            tagArray.push(nameOfTag)
+        };
+        resolve(tagArray)
+    })
+};
 
 //Adds a new tag to the tags table
 //This function should only be used in reference to the addTagtoSnippet function further below
@@ -46,13 +66,21 @@ const getTagIDFromName = async function (connection, SearchedTagName) {
         resolve(returnedTagID)
     })
 }
+//Returns the first tagName that matches a given tag id
+const getTagNamefromID = async function (connection, SearchedTagID) {
+    return new Promise(async function (resolve, reject) {
+        const returnedData = await extraFunctions.selectWhereEqual(connection, "tags", "id", `"${SearchedTagID}"`)
+        const returnedTagName = returnedData[0].tagName
+        resolve(returnedTagName)
+    })
+}
 //functions that links a tag (currently existing or not) to an already existing snippet
 const addTagtoSnippet = async function (connection, addTagName, addSnippetID) {
     return new Promise(async function (resolve, reject) {
         //Check if the tag already exists, //if not then make a new tag
         const tagExistData = await extraFunctions.selectWhereEqual(connection, "tags", "tagName", `"${addTagName}"`)
-        console.log(tagExistData)
-        if (tagExistData !== []) {} //if the tag does exist then do nothing
+        //if the tag does exist then do nothing
+        if (tagExistData.length > 0) {} 
         //else make a new tag
         else {
             makeNewTag(connection, `"${addTagName}"`)
@@ -85,5 +113,6 @@ const addTagtoSnippet = async function (connection, addTagName, addSnippetID) {
 
 module.exports = {
     addTagtoSnippet,
-    DeleteTag
+    DeleteTag,
+    getAllTagsofSnippet
 };
