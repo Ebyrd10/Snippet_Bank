@@ -2,14 +2,11 @@
 USE snippetsDB;
 
 -- Example Tags --
-INSERT INTO tags (tagName) VALUES ("Apple");
-INSERT INTO tags (tagName) VALUES ("Oragne");
-INSERT INTO tags (tagName) VALUES ("Pie");
+INSERT INTO tags (tagName) VALUES ("React"), ("Vue"), ("Angular"), ("jQuery"), ("Heroku"), ("Bootstrap"), ("mySQL"), ("Handlebars");
+
 
 -- Preffered method for adds a tag to a snippet --
-INSERT INTO linkingTable (linkSnippetID, linkTagID) VALUES (2, 1);
-INSERT INTO linkingTable (linkSnippetID, linkTagID) VALUES (3, 1);
-INSERT INTO linkingTable (linkSnippetID, linkTagID) VALUES (3, 3);
+INSERT INTO linkingTable (linkSnippetID, linkTagID) VALUES (1,1), (1,5), (2,2), (2,6), (3,1), (4,2), (5,8), (6,7), (7,3), (8,6);
 
 INSERT INTO snippets (snippetTitle, snippetBody, description, language) 
 VALUES ("AJAX Call", '$.ajax({
