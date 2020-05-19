@@ -11,8 +11,8 @@ body{
 .list-container .card {
     height: calc(100vh - 70px);
     border-bottom: none;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 
 .list-container {
@@ -21,8 +21,8 @@ body{
 
 .list-container .list-group, .list-container .list-group-item:first-child, .list-container .card {
     border-top: none;
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
 }
 
 .list-container i {
@@ -57,6 +57,7 @@ form, #snippetCard {
     padding: 5px;
     background-color: #6E757C;
     margin-top: 35px;
+    border-radius: 5px;
 }
 
 #addSnippet {
@@ -149,5 +150,9 @@ form, #snippetCard {
 }
 
 #tagArea {
-    margin-top: 29px;
+    margin-top: 33px;
+}
+
+#saveUpdatedSnippet {
+    margin-top: 20px;
 }
