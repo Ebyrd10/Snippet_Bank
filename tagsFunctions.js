@@ -1,5 +1,21 @@
 const extraFunctions = require ("./functions")
 
+const getAllTagsofSnippet = function (connection, snippetID) {
+    return new Promise(async function (resolve, reject) {
+        const tagArray = [];
+        const tagArrayIDs = [];
+        const returnedData = await extraFunctions.selectWhereEqual(connection, "LinkingTable", "linkSnippetID", `"${snippetID}"`)
+        for (linkEntry of returnedData){
+            tagArrayIDs.push(returnedData[linkEntry].linkTagID)
+        };
+        for (id of tagArrayIDs){
+            const idofTag = id
+            tagArray.push()
+        };
+        // const returnedTagID = returnedData[0].id
+        resolve(returnedTagID)
+    })
+};
 
 //Adds a new tag to the tags table
 //This function should only be used in reference to the addTagtoSnippet function further below
@@ -85,5 +101,6 @@ const addTagtoSnippet = async function (connection, addTagName, addSnippetID) {
 
 module.exports = {
     addTagtoSnippet,
-    DeleteTag
+    DeleteTag,
+    getAllTagsofSnippet
 };

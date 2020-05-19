@@ -86,7 +86,7 @@
           </ul>
         </div>
       </div>
-      <div class="col-9">
+      <div class="col-7">
         <form id="newSnippetArea" style="display: none;" action="/" method="POST" name="snippets" class="form-group">
 
           <label>snippetTitle</label>
@@ -163,6 +163,9 @@
 
         </div>
 
+
+      </div>
+      <div class="col-2" id="tagArea"></div>>
 
       </div>
     </div>
@@ -255,6 +258,11 @@
         hljs.highlightBlock(this);
       });
     });
+    //sends a post request for the tags given an id
+    $.ajax({
+      url: "/api/displayTags/" + id,
+      method: "POST"
+    })
   });
   //Handling the currently selected language
   const selectedLanguageConst = "{{ selectedLanguage }}";
