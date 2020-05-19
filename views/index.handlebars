@@ -84,7 +84,7 @@
           </ul>
         </div>
       </div>
-      <div class="col-9">
+      <div class="col-7">
         <form id="newSnippetArea" style="display: none;" action="/" method="POST" name="snippets" class="form-group">
 
           <label>snippetTitle</label>
@@ -122,9 +122,23 @@
             {{#each languages}}
             <option value="{{@key}}">{{this}}</option>
             {{/each}}
+
+            <option value="">Select a language</option>
+            <option value="c">C</option>
+            <option value="csharp">C#</option>
+            <option value="cplusplus">C++</option>
+            <option value="css3">CSS3</option>
+            <option value="html5">HTML5</option>
+            <option value="javascript">Javascript</option>
+            <option value="java">Java</option>
+            <option value="python">Python</option>
+            <option value="php">PHP</option>
           </select>
 
+
+
           <label>description</label>
+
 
           <textarea type="text" class="form-control" name="detailDescription"
             id="detailDescription">{{detailSnippet.description}}</textarea>
@@ -152,6 +166,11 @@
         </div>
 
 
+      </div>
+      <div class="col-2" id="tagArea">
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
       </div>
     </div>
   </div>
