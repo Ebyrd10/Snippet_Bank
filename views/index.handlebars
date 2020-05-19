@@ -235,6 +235,7 @@
     $("#submitSnippet").show();
   });
   $("li").on("click", function (event) {
+    $("#detailSnippetArea").hide();
     $("#snippetCard").show();
     $("#newSnippetArea").hide();
     const id = $(this).val();
