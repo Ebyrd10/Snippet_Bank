@@ -249,5 +249,3 @@ app.listen(PORT, () => {
   console.log("Server listening on: http://localhost:" + PORT);
 });
 
-
-tagsManipulate.DeleteTag(connection, "Apple", 3)
