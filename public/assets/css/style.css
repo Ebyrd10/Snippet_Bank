@@ -80,8 +80,19 @@ form, #snippetCard {
 .btn.btn-secondary.dropdown-toggle {
     width: 64%;
     padding-left: 10px;
-    margin-left: 18px;
+    margin-left: 56px;
     height: 80px;
+}
+.btn.btn-secondary.dropdown-toggle.orderby{
+    margin-left: -70px;
+}
+[name="searchForm"]{
+    margin-left:-199px;  
+}
+.list-container.snippets{
+    margin-top: 35px;
+    margin-left: 70px;
+
 }
 #tagUL {
     list-style: none;
