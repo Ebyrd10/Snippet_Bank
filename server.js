@@ -4,6 +4,11 @@ const express = require("express");
 const mysql = require("mysql");
 const app = express();
 
+//Importing custom tag database manipulate functions
+const tagsManipulate = require("./tagsFunctions")
+//Example of how to use the function
+//tagsManipulate.addTagtoSnippet(connection, "My Name Tag is Purple", 2);
+
 const PORT = process.env.PORT || 8089;
 
 const dbConfig = process.env.NODE_ENV === "production" ? config.heroku : config.local;
@@ -211,6 +216,20 @@ app.get("/api/filter/:language/:query", function (req, res) {
     if (err) throw err;
     res.render("index", { snippets: data, selectedLanguage: req.params.language, languages:languages });
   });
+});
+
+//Tag Api Routes
+//DELETE
+app.delete("/api/deleteTag/:snippetID/:tagName", function (req, res) {
+  const snippetID = req.params.snippetID;
+  const tagName = req.params.tagName;
+  tagsManipulate.DeleteTag(connection, tagName, snippetID);
+});
+//ADD
+app.post("/api/addTag/:snippetID/:tagName", function (req, res) {
+  const snippetID = req.params.snippetID;
+  const tagName = req.params.tagName;
+  tagsManipulate.addTagtoSnippet(connection, tagName, snippetID);
 });
 
 

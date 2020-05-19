@@ -215,6 +215,7 @@
     $("#submitSnippet").show();
   });
   $("li").on("click", function (event) {
+    $("#detailSnippetArea").hide();
     $("#snippetCard").show();
     $("#newSnippetArea").hide();
     const id = $(this).val();
@@ -245,6 +246,8 @@
   if ($("#mainFilterTitle").text() === "") {
     $("#mainFilterTitle").text("all")
   }
+
+
 
   //Event handler for the main dropdown
   $(".ddLanguage").on("click", function (event) {
