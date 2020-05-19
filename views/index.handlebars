@@ -121,12 +121,17 @@
                     <input type="text" class="form-control" name="detailTitle" id="detailTitle"
                         value="{{detailSnippet.title}}" />
 
-                    <label>language</label>
-                    <select class="form-control" name="detailLanguage" id="detailLanguage"
-                        value="{{detailSnippet.language}}">
-                        {{#each languages}}
-                        <option value="{{@key}}">{{this}}</option>
-                        {{/each}}
+            {{!-- <option value="">Select a language</option>
+            <option value="c">C</option>
+            <option value="csharp">C#</option>
+            <option value="cplusplus">C++</option>
+            <option value="css3">CSS3</option>
+            <option value="html5">HTML5</option>
+            <option value="javascript">Javascript</option>
+            <option value="java">Java</option>
+            <option value="python">Python</option>
+            <option value="php">PHP</option> --}}
+          </select>
 
                         <option value="">Select a language</option>
                         <option value="c">C</option>
