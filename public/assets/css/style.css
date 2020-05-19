@@ -46,6 +46,11 @@ h1 {
     background-color: #1F2833;
     padding-left: 75px;
     color: #FFF;
+    margin-bottom: 4rem;
+    border-bottom: 20px;
+    border-color:#414141;
+    border-bottom-style: solid;
+    border-radius: 0;
 }
 
 
@@ -84,14 +89,18 @@ form, #snippetCard {
     height: 80px;
 }
 .btn.btn-secondary.dropdown-toggle.orderby{
-    margin-left: -70px;
+    margin-left: -20px;
+    min-width: 180px;
 }
 [name="searchForm"]{
-    margin-left:-199px;  
+    margin-left:-10px;  
+    margin-right: 40px;
+  
 }
 .list-container.snippets{
     margin-top: 35px;
     margin-left: 70px;
+   
 
 }
 #tagUL {
@@ -121,3 +130,4 @@ form, #snippetCard {
 	position:relative;
 	top:1px;
 }
+
