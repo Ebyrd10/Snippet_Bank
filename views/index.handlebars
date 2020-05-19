@@ -262,6 +262,11 @@
         hljs.highlightBlock(this);
       });
     });
+    //sends a post request for the tags given an id
+    $.ajax({
+      url: "/api/displayTags/" + id,
+      method: "POST"
+    })
   });
   //Handling the currently selected language
   const selectedLanguageConst = "{{ selectedLanguage }}";
