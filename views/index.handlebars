@@ -180,7 +180,7 @@
             </div>
             <div class="col-2" id="tagArea">
                 <div class="row">
-                    <input type="text" class="form-control col-12" name="tagNameEntryField"
+                    <input type="text" class="form-control col-12" name="tagNameEntryField" id="tagNameEntryField"
                         placeholder="Enter Tag Name">
                     <button class="tagButtonSpecial col btn" id="addTagBtn">Add Tag</button>
                     <button class="tagButtonSpecial col btn" id="deleteTagBtn">Delete Tag</button>
@@ -351,5 +351,25 @@
 
         }
     });
+
+    //Tag button event watchers
+    $("#addTagBtn").on("click", function(){
+        const tagName = $("#tagNameEntryField").val();
+        const snippetID = $("#bodyID").text();
+        $.ajax({
+                url: `/api/addTag/${snippetID}/${tagName}`,
+                method: "post"
+            })
+            
+    })
+    $("#deleteTagBtn").on("click", function(){
+        const tagName = $("#tagNameEntryField").val();
+        const snippetID = $("#bodyID").text();
+        $.ajax({
+                url: `/api/deleteTag/${snippetID}/${tagName}`,
+                method: "post"
+            })
+            
+    })
 
 </script>

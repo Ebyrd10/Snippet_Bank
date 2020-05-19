@@ -31,12 +31,12 @@ const makeNewTag = function (connection, tagName) {
     })
 }
 //Deletes a tag from the a snippet in the linking table, if the tag has no links at all then the tag is deleted from the tags table
-const DeleteTag = function (connection, tagName, snippetID) {
+const DeleteTag = async function (connection, tagName, snippetID) {
     if (!snippetID) {
         console.log("Must have a snippet value inputed")
         return;
     }
-    const tagID = getTagIDFromName(tagName)
+    const tagID = await getTagIDFromName(tagName)
     //First deletes the link between the snippet and the tab
     connection.query(`DELETE From linkingTable WHERE linkTagID = ${tagID} AND linkSnippetID = ${snippetID};`, function (err, data) {
         if (err) {
@@ -48,13 +48,7 @@ const DeleteTag = function (connection, tagName, snippetID) {
             if (data === []) {
                 //if the tag is no longer associated with any tag, it is removed from the tags table
                 connection.query(`DELETE From tags WHERE TagID = ${tagID};`, function (err, data) {
-                    if (err) {
-                        throw err;
-                    }
                 })
-            };
-            if (err) {
-                throw err;
             };
         }))
 }
@@ -105,6 +99,7 @@ const addTagtoSnippet = async function (connection, addTagName, addSnippetID) {
                 }
             })
         }
+        resolve("The add tag promise has been resolved")
     });
 }
 

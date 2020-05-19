@@ -220,16 +220,20 @@ app.get("/api/filter/:language/:query", function (req, res) {
 
 //Tag Api Routes
 //DELETE
-app.delete("/api/deleteTag/:snippetID/:tagName", function (req, res) {
+app.post("/api/deleteTag/:snippetID/:tagName", function (req, res) {
   const snippetID = req.params.snippetID;
   const tagName = req.params.tagName;
+  console.log("got Here")
   tagsManipulate.DeleteTag(connection, tagName, snippetID);
+  console.log("got there")
 });
 //ADD
-app.post("/api/addTag/:snippetID/:tagName", function (req, res) {
+app.post("/api/addTag/:snippetID/:tagName", async function (req, res) {
   const snippetID = req.params.snippetID;
   const tagName = req.params.tagName;
   tagsManipulate.addTagtoSnippet(connection, tagName, snippetID);
+  res.json(tagName);
+  
 });
 //DISPLAY ALL TAGS FOR A SNIPPET
 //when given a snippetID, returns an array of tag names associated with that snippet
