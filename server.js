@@ -164,6 +164,7 @@ app.post("/", (req, res) => {
 app.post("/api/search/", function (req, res) {
   const splitStrArr = req.body.searchField.split(" ");
   var query = `SELECT * FROM snippets WHERE `;
+  //Searching through snippet titles
   for (var i = 0; i < splitStrArr.length; i++) {
     if (i == 0) {
       query += `snippetTitle LIKE '%${splitStrArr[i]}%'`;
@@ -171,7 +172,7 @@ app.post("/api/search/", function (req, res) {
       query += ` AND snippetTitle LIKE '%${splitStrArr[i]}%'`
     }
   }
-
+  //Searching through snippet descriptions
   for (var i = 0; i < splitStrArr.length; i++) {
     if (i == 0) {
       query += ` OR description LIKE '%${splitStrArr[i]}%'`
@@ -179,6 +180,8 @@ app.post("/api/search/", function (req, res) {
       query += ` AND description LIKE '%${splitStrArr[i]}%'`
     }
   }
+  
+  //Sending the results back
   connection.query(query, function (err, data) {
     if (err) throw err;
 
