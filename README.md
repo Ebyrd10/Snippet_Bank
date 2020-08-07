@@ -1,10 +1,17 @@
 # Snippet Bank
+<p>
+  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
+  <a href="https://github.com/Ebyrd10/burgers_taskmaster#readme" target="_blank">
+    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
+  </a>
+  <a href="https://github.com/Ebyrd10/burgers_taskmaster/graphs/commit-activity" target="_blank">
+    <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" />
+  </a>
+</p>
 
-Snippet Bank is an application used as a centralized location to store code snippets.
+Snippet Bank is an application for developers to store code snippets in a centralzied location- no matter the language or type of snippet.
 
-## Getting Started
-
-The project can be cloned and ran locally.  If choosing to run the application locally, navigate to http://localhost:8089 to start the application (see installation instructions before starting application).  This application is also available on Heroku at the following link:
+![snippet_bank](snippet_bank.PNG)
 
 ## Description
 
@@ -12,18 +19,34 @@ Users are given the ability to add, update, and delete snippets.  All snippets a
 
 ## Installation
 
-This application uses express, express-handlebars, and mysql as dependencies.  Running "npm install" will install all dependencies.  If choosing to run locally, users must first create the database using the db/schema.sql.  Initially database values can also be provided using the db/seed.sql file.  After dependencies are install and the database is setup, users can run the application by using node to run the server.js file (with command "node server.js") located in the root of the application directory.
+```sh
+npm install
+```
 
-## Built With
+```sh
+create mySQL schema using db/schema.sql
+```
 
-Tech stack list:
-HTML/CSS
-jQuery
-Bootstrap
-node.js/express
-Handlebars
-mySQL
-highlight.js
+```sh
+ Initial database values can also be provided using the db/seed.sql file.
+```
+
+```sh
+node server.js
+```
+If choosing to run the application locally, navigate to http://localhost:8089
+
+## Technology
+* HTML
+* CSS
+* jQuery
+* Bootstrap
+*node.js
+*express
+*Handlebars
+*express-handlebars
+*mySQL
+*highlight.js
 
 ## Contributing
 
