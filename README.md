@@ -58,7 +58,7 @@ Kouros Mousavi, Ethan Byrd, Mason SungJin Kim, and Mariana Barnett
 
 | **Ethan Byrd**| **Kouros Mousavi**| **Mariana Barnett**| **Mason SungJin Kim** |
 | :---: |:---:| :---:| :---:|
-| [![Ethan Byrd](https://www.github.com/Ebyrd10.png?size=200)](http://github.com/Ebyrd10)    | [![Kouros Mousavi](https://www.github.com/koutron.png?size=200)](http://github.com/koutron)    | [![Mariana Barnett](https://www.github.com/maribarnett3.png?size=200)](http://github.com/maribarnett3) | [![Mason SungJin Kim](https://www.github.com/sungjinkimm.png?size=200)](http://github.com/sungjinkimm)  |
+| [![Ethan Byrd](https://www.github.com/Ebyrd10.png?size=200)](http://github.com/Ebyrd10)    | [![Kouros Mousavi](https://www.github.com/koutron.png?size=200)](http://github.com/koutron)    | [![Mariana Barnett](https://www.github.com/maribarnett3.png?size=200)](http://github.com/maribarnett3) | [![Mason SungJin Kim](https://www.github.com/sungjinkimm.png)](http://github.com/sungjinkimm)  |
 | <a href="http://github.com/Ebyrd10" target="_blank">`github.com/Ebyrd10`</a> | <a href="http://github.com/koutron" target="_blank">`github.com/koutron`</a> | <a href="http://github.com/maribarnett3" target="_blank">`github.com/maribarnett3`</a> | <a href="http://github.com/sungjinkimm" target="_blank">`github.com/sungjinkimm`</a> |
 
 ## 🤝 Contributing
