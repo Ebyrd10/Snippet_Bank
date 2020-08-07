@@ -34,19 +34,22 @@ create mySQL schema using db/schema.sql
 ```sh
 node server.js
 ```
+
+```sh
 If choosing to run the application locally, navigate to http://localhost:8089
+```
 
 ## Technology
 * HTML
 * CSS
 * jQuery
 * Bootstrap
-*node.js
-*express
-*Handlebars
-*express-handlebars
-*mySQL
-*highlight.js
+* node.js
+* express
+* Handlebars
+* express-handlebars
+* mySQL
+* Highlight.js
 
 ## Contributing
 
