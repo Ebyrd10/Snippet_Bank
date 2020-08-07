@@ -58,7 +58,7 @@ Kouros Mousavi, Ethan Byrd, Mason SungJin Kim, and Mariana Barnett
 
 | **Ethan Byrd**| **Kouros Mousavi**| **Mariana Barnett**| **Mason SungJin Kim** |
 | :---: |:---:| :---:| :---:|
-| [![Ethan Byrd](https://avatars1.githubusercontent.com/u/Ebyrd10?v=3&s=200)](http://github.com/Ebyrd10)    | [![FVCproductions](https://avatars1.githubusercontent.com/u/4284691s=200)](http://fvcproductions.com)    | [![FVCproductions](https://avatars1.githubusercontent.com/u/4284691?v=3&s=200)](http://fvcproductions.com) | [![FVCproductions](https://avatars1.githubusercontent.com/u/4284691?v=3&s=200)](http://fvcproductions.com)  |
+| [![Ethan Byrd](https://avatars1.githubusercontent.com/u/Ebyrd10.png?v=3&s=200)](http://github.com/Ebyrd10)    | [![FVCproductions](https://avatars1.githubusercontent.com/u/4284691s=200)](http://fvcproductions.com)    | [![FVCproductions](https://avatars1.githubusercontent.com/u/4284691?v=3&s=200)](http://fvcproductions.com) | [![FVCproductions](https://avatars1.githubusercontent.com/u/4284691?v=3&s=200)](http://fvcproductions.com)  |
 | <a href="http://github.com/Ebyrd10" target="_blank">`github.com/Ebyrd10`</a> | <a href="http://github.com/koutron" target="_blank">`github.com/koutron`</a> | <a href="http://github.com/maribarnett3" target="_blank">`github.com/maribarnett3`</a> | <a href="http://github.com/sungjinkimm" target="_blank">`github.com/sungjinkimm`</a> |
 
 ## 🤝 Contributing
