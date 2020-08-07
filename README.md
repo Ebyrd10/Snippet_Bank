@@ -51,10 +51,7 @@ If choosing to run the application locally, navigate to http://localhost:8089
 * mySQL
 * Highlight.js
 
-## Contributing
-
-Overall team:
-Kouros Mousavi, Ethan Byrd, Mason SungJin Kim, and Mariana Barnett
+## Meet the Team
 
 | **Ethan Byrd**| **Kouros Mousavi**| **Mariana Barnett**| **Mason SungJin Kim** |
 | :---: |:---:| :---:| :---:|
