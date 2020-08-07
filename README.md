@@ -53,5 +53,29 @@ If choosing to run the application locally, navigate to http://localhost:8089
 Overall team:
 Kouros Mousavi, Ethan Byrd, Mason SungJin Kim, and Mariana Barnett
 
+## 🤝 Contributing
+
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/Ebyrd10/burgers_taskmaster/issues). You can also take a look at the [contributing guide](https://github.com/Ebyrd10/burgers_taskmaster/blob/master/CONTRIBUTING.md).
+
+## Show your support
+
+Give a ⭐️ if this project helped you!
+## Support
+
+Reach out to me at one of the following places!
+
+- Website at <a href="http://www.Ethanmbyrd.com" target="_blank">`Ethanmbyrd.com`</a>
+- LinkdenIn at <a href="https://www.linkedin.com/in/ethan-byrd/" target="_blank">`https://www.linkedin.com/in/ethan-byrd/`</a>
+
+---
+
+## License
+
+[![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
+
+- **[MIT license](http://opensource.org/licenses/mit-license.php)**
+
+
+
 
 
